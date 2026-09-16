@@ -2,7 +2,7 @@
 
 个人 fly fishing / float fishing 网站。复古纸色、版画山水与衬线字体，以滚动浏览串起九种鱼、白甲鱼心愿和个人介绍。鱼种保留立体风格图标，悬停预览真实鱼获，点击打开照片、笔记日期、地区与原帖。
 
-部署目标为 Railway，正式域名为 `about.zeooo.cc`。旧 Sites 配置保留作历史记录，已经移出运行和构建流程。
+网站部署在 Railway，正式域名为 `about.zeooo.cc`。旧 Sites 配置保留作历史记录，已经移出运行和构建流程。
 
 ## 本地运行
 
@@ -27,7 +27,7 @@ PORT=3000 npm start
 
 Git 仓库根目录是本文件所在的 `website/`。只需将这个网站仓库同步到自己的 GitHub；资料归档和聊天 context 在上一级项目中。
 
-在 Railway 选择这个仓库即可使用随项目提供的 `Dockerfile` 与 `railway.json`。若未来把整个上级项目另建为仓库，Railway 的 Root Directory 应设为 `website`。
+Railway 已连接 `Zeo0811/me` 的 `main` 分支，推送后自动部署，并自动识别根目录的 `Dockerfile`。当前 Railway 新服务已不再启用旧 Config as Code，因此 `railway.json` 仅作为配置参考；控制台已设置 `PORT=3000`、域名目标端口 `3000`、健康检查 `/healthz`。若未来把整个上级项目另建为仓库，Railway 的 Root Directory 应设为 `website`。
 
 Docker 构建会安装依赖、下载国家与时区 IP 数据、构建网站；启动命令已设置为 `npm start`。不需要 Sites 或 Cloudflare 账户、绑定、访问凭据。
 
