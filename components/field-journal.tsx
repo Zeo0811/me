@@ -303,7 +303,7 @@ export function FieldJournal({
             <div className="about-copy">
               <h2 id="about-title">
                 {t('你好，我是', 'Hello, I’m')}{' '}
-                <em>Zeo</em>
+                <em>Zeo</em>{t('，住在北京', ', based in Beijing')}
               </h2>
               <p>
                 {t(
