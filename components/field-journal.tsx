@@ -56,7 +56,7 @@ export function FieldJournal({
   }, [timeZone, previewScene]);
   useEffect(() => {
     document.documentElement.lang = zh ? 'zh-CN' : 'en';
-    document.title = zh ? 'Zeooo — 溪流手记' : 'Zeooo — A Field Journal';
+    document.title = 'About Zeo';
   }, [zh]);
   useEffect(() => {
     const el = root.current;

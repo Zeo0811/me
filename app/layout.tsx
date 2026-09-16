@@ -7,7 +7,7 @@ import './globals.css';
 export async function generateMetadata(): Promise<Metadata> {
   const language = await requestLanguage();
   return {
-    title: language === 'zh' ? 'Zeooo — 溪流手记' : 'Zeooo — A Field Journal',
+    title: 'About Zeo',
     description:
       language === 'zh'
         ? '水上学钓，林中观鸟。九种已经相遇的鱼，与下一段河流的期待。'
