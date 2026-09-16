@@ -1,2 +1,4 @@
 This product includes GeoLite Data created by MaxMind, available from https://www.maxmind.com.
 GeoLite terms and notices are retained in the project licenses directory.
+
+Typography: Noto Serif SC and Libre Baskerville, SIL Open Font License 1.1. Font license copies are retained in the project licenses directory.

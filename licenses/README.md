@@ -9,3 +9,9 @@ CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/.
 Retain attribution. Refresh/rebuild the database at least monthly and restart the process; do not keep using superseded datasets beyond the time permitted by the terms. A copy of the current terms is stored as `GeoLite-EULA.html`. The library also retains its own license notices.
 
 The previous country-only `user-country` dataset used CDLA-Permissive-2.0; its historical license file is retained, but the runtime now uses country+timezone GeoLite2 data.
+
+## Self-hosted web fonts
+
+- Noto Serif SC Variable 5.3.0, supplied by @fontsource-variable/noto-serif-sc. See `Noto-Serif-SC-OFL.txt`.
+- Libre Baskerville 5.3.0, regular and true italic, supplied by @fontsource/libre-baskerville. See `Libre-Baskerville-OFL.txt`.
+- Both fonts are distributed under SIL Open Font License 1.1. Fonts are bundled into the website and served from its own origin. Noto Serif SC uses Unicode-range subsets, so browsers request only the subsets needed by visible text.

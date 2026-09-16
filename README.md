@@ -95,3 +95,7 @@ npm run build
 远程 `origin` 关联 [Zeo0811/me](https://github.com/Zeo0811/me)。Railway 连接该仓库的 `main` 分支。
 
 The closing landscape reuses the opening scene and local-time palette. Visible footer copy and controls are removed. GeoLite attribution remains available at `/credits.txt` and in the project license documentation.
+
+## 网站自带字体
+
+中文使用 Noto Serif SC，英文使用 Libre Baskerville（含真正斜体）。字体通过固定版本的 Fontsource 依赖随网站构建，同域加载，不要求访客安装字体，也不请求 Google Fonts CDN。中文按 Unicode 范围分片加载；font-display: swap 避免等待字体时文字消失。字体许可见 licenses/。
