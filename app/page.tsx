@@ -71,7 +71,7 @@ export default function Home() {
 
         <section id="about" className="about wrap" aria-labelledby="about-title">
           <div><p className="eyebrow">03 / THE ANGLER</p><h2 id="about-title">你好，我是 Zeo<span className="heading-dot">.</span></h2><p className="about-sign">See you by the river.</p></div>
-          <div className="about-copy"><p>喜欢站在流水里，读水、绑蝇，<br className="desktop-break"/>琢磨一次更自然的 drift。</p><p>用 Euro nymphing 细细探一段流，也用 Centerpin 把飞蝇送向更远的水面。喜欢本土鱼，也喜欢每一次陌生的相遇。</p><p>希望很多年以后，仍然能在晨曦和日暮中走进河流。钓起，放归，慢慢学。</p><div className="about-bottom"><span>CATCH & RELEASE</span><a className="text-link" href={profileUrl} target="_blank" rel="noreferrer">更多水边日常 <ArrowUpRight size={17}/></a></div></div>
+          <div className="about-copy"><p>喜欢站在流水里，读水、绑蝇，<br className="desktop-break"/>琢磨一次更自然的 drift。</p><p>用 Euro nymphing 细细探一段流，也用 Centerpin 把飞蝇送向更远的水面。喜欢本土鱼，也喜欢每一次陌生的相遇。</p><p>希望很多年以后，仍然能在晨曦和日暮中走进河流。钓起，放归，慢慢学。</p><p><a className="text-link" href="mailto:zeo0811@gmail.com" aria-label="发送邮件给 Zeo：zeo0811@gmail.com">zeo0811@gmail.com <ArrowUpRight size={17}/></a></p><div className="about-bottom"><span>CATCH & RELEASE</span><a className="text-link" href={profileUrl} target="_blank" rel="noreferrer">更多水边日常 <ArrowUpRight size={17}/></a></div></div>
         </section>
       </main>
       <footer className="footer wrap"><a className="footer-wordmark" href="#top">zeo.</a><span>IN SYNC WITH THE CURRENT.</span><a href="#top" aria-label="回到顶部">回到上游 <ArrowUpRight size={16}/></a></footer>
