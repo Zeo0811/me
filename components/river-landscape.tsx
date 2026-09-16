@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { SceneCamera } from './scene-camera';
 import type { CSSProperties } from 'react';
 import { sceneAssets, type DayScene } from '@/lib/daylight';
 
@@ -18,6 +19,7 @@ export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }:
   const terrain = sceneAssets[scene];
   return (
     <div className="river-scene" aria-hidden="true">
+      <SceneCamera>
       <div className="scene-sky" />
       <div className="scene-cloudlight" />
       <div className="scene-stars">
@@ -99,6 +101,7 @@ export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }:
         />
       </div>
       <div className="scene-evening" />
+      </SceneCamera>
     </div>
   );
 }

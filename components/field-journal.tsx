@@ -182,7 +182,7 @@ export function FieldJournal({
           String(
             Math.min(
               1,
-              (0.24 * ease(clamp(opening / 0.92)) + 0.24 * wash) * (1 - closingReveal),
+              (0.24 * ease(clamp((opening - 0.35) / 0.57)) + 0.24 * wash) * (1 - closingReveal),
             ),
           ),
         );
