@@ -3031,6 +3031,16 @@ h2 em {
   filter: saturate(0.8);
 }
 .scene-angler img { display: block; width: 100%; height: 100%; }
+.scene-angler .angler-cel {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+.scene-angler[data-cast-frame='0'] [data-cel='0'],
+.scene-angler[data-cast-frame='1'] [data-cel='1'],
+.scene-angler[data-cast-frame='2'] [data-cel='2'],
+.scene-angler[data-cast-frame='3'] [data-cel='3'],
+.scene-angler[data-cast-frame='4'] [data-cel='4'] { visibility: visible; }
 .journal[data-scene='dawn'] .scene-angler { filter: saturate(0.65) brightness(0.96); }
 .journal[data-scene='day'] .scene-angler { filter: saturate(0.8) brightness(1.06); }
 .journal[data-scene='night'] .scene-angler { filter: saturate(0.55) brightness(0.62) hue-rotate(12deg); }

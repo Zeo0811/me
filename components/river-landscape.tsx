@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { SceneCamera } from './scene-camera';
+import { AnglerCast } from './angler-cast';
 import type { CSSProperties } from 'react';
 import { sceneAssets, type DayScene } from '@/lib/daylight';
 
@@ -78,16 +79,7 @@ export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }:
             />
           </g>
         </svg>
-        <div className="scene-angler">
-          <Image
-            unoptimized
-            src="/images/hero/zeo-angler.webp"
-            alt=""
-            width={640}
-            height={640}
-            loading={priority ? 'eager' : 'lazy'}
-          />
-        </div>
+        <AnglerCast />
       </div>
       <div className="scene-foreground">
         <Image
