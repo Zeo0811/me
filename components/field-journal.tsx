@@ -9,7 +9,7 @@ import { ArrowUpRight, Mail } from './journal-icons';
 import { profileUrl } from '@/content/journal';
 import { englishFishNames } from '@/content/journal-en';
 import { wishlist } from '@/content/wishlist';
-import { sceneAt, validTimeZone, type DayScene } from '@/lib/daylight';
+import { preferredTimeZone, sceneAt, validTimeZone, type DayScene } from '@/lib/daylight';
 
 export function FieldJournal({
   initialLanguage,
@@ -29,11 +29,22 @@ export function FieldJournal({
   const t = (cn: string, en: string) => (zh ? cn : en);
   useEffect(() => {
     if (previewScene) return;
-    const zone = timeZone
-      ?? validTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
-      ?? 'UTC';
     const update = () => {
-      if (!document.hidden) setScene(sceneAt(new Date(), zone));
+      if (document.hidden) return;
+      let deviceZone: string | null = null;
+      try {
+        deviceZone = validTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+      } catch {
+        // IP timezone remains available when device timezone detection fails.
+      }
+      setScene(sceneAt(new Date(), preferredTimeZone(deviceZone, timeZone)));
+      if (deviceZone) {
+        // Let the next server render start with the device's local-time landscape.
+        const value = encodeURIComponent(deviceZone);
+        if (!document.cookie.split(';').some((part) => part.trim() === `zeooo-timezone=${value}`)) {
+          document.cookie = `zeooo-timezone=${value}; Path=/; Max-Age=31536000; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+        }
+      }
     };
     update();
     const timer = window.setInterval(update, 60_000);

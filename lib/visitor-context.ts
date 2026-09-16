@@ -1,6 +1,6 @@
-import { browserLanguage, countryLanguage, manualLanguage, visitorIp } from './locale';
+import { automaticLanguage, manualLanguage, visitorIp } from './locale';
 import type { Language } from './locale';
-import { validTimeZone } from './daylight';
+import { rememberedTimeZone, validTimeZone } from './daylight';
 
 type HeadersLike = { get(name: string): string | null };
 type LocationHint = { country?: string; timezone?: string } | null;
@@ -20,8 +20,7 @@ export async function resolveVisitorContext(
   }
   return {
     language: manualLanguage(headers.get('cookie'))
-      ?? countryLanguage(location?.country)
-      ?? browserLanguage(headers.get('accept-language')),
-    timeZone: validTimeZone(location?.timezone),
+      ?? automaticLanguage(location?.country, headers.get('accept-language')),
+    timeZone: rememberedTimeZone(headers.get('cookie')) ?? validTimeZone(location?.timezone),
   };
 }

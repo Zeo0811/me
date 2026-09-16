@@ -33,6 +33,14 @@ export function countryLanguage(country?: string): Language | undefined {
   if (!country || !/^[A-Z]{2}$/.test(country)) return undefined;
   return ['CN', 'HK', 'MO', 'TW'].includes(country) ? 'zh' : 'en';
 }
+// Chinese visitors or a Chinese browser get the bilingual presentation.
+export function automaticLanguage(country: string | undefined, acceptLanguage: string | null): Language {
+  const fromCountry = countryLanguage(country);
+  const fromBrowser = acceptLanguage ? browserLanguage(acceptLanguage) : undefined;
+  if (fromCountry === 'zh' || fromBrowser === 'zh') return 'zh';
+  return fromCountry ?? fromBrowser ?? 'zh';
+}
+
 export function visitorIp(headers: HeaderReader): string | undefined {
   // Railway's proxy forwards visitor IP. This is a presentation hint, never an auth signal.
   const candidate = (
@@ -57,13 +65,13 @@ export async function resolveLanguage(
   const manual = manualLanguage(headers.get('cookie'));
   if (manual) return manual;
   const ip = visitorIp(headers);
+  let country: string | undefined;
   if (ip) {
     try {
-      const language = countryLanguage(await lookupCountry(ip));
-      if (language) return language;
+      country = await lookupCountry(ip);
     } catch {
       /* A missing country database must never block the journal. */
     }
   }
-  return browserLanguage(headers.get('accept-language'));
+  return automaticLanguage(country, headers.get('accept-language'));
 }

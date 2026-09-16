@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveLanguage, visitorIp } from '../lib/locale.ts';
+import { automaticLanguage, resolveLanguage, visitorIp } from '../lib/locale.ts';
 import '../scripts/geo-env.mjs';
 const h = (values) => new Headers(values);
 const cn = async () => 'CN';
@@ -29,7 +29,7 @@ test('explicit language wins over country and browser', async () => {
     'zh',
   );
 });
-test('country defaults take precedence over browser preference', async () => {
+test('Chinese country or Chinese browser enables the bilingual presentation', async () => {
   for (const country of ['CN', 'HK', 'MO', 'TW'])
     assert.equal(
       await resolveLanguage(
@@ -43,8 +43,13 @@ test('country defaults take precedence over browser preference', async () => {
       h({ 'x-forwarded-for': '8.8.8.8', 'accept-language': 'zh' }),
       us,
     ),
-    'en',
+    'zh',
   );
+  assert.equal(automaticLanguage('US', 'en-US,en;q=0.9'), 'en');
+  assert.equal(automaticLanguage('US', null), 'en');
+  assert.equal(automaticLanguage(undefined, null), 'zh');
+  assert.equal(automaticLanguage('US', 'en;q=1,zh;q=0.2'), 'en');
+  assert.equal(automaticLanguage('CN', 'en-US'), 'zh');
 });
 test('private IPs, missing DB and unknown country use browser preference', async () => {
   assert.equal(

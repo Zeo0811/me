@@ -9,6 +9,21 @@ export function validTimeZone(value?: string | null): string | null {
   }
 }
 
+export function preferredTimeZone(deviceZone?: string | null, ipZone?: string | null): string {
+  return validTimeZone(deviceZone) ?? validTimeZone(ipZone) ?? 'UTC';
+}
+
+export function rememberedTimeZone(cookie: string | null): string | null {
+  const value = cookie?.split(';').map((part) => part.trim())
+    .find((part) => part.startsWith('zeooo-timezone='))?.slice('zeooo-timezone='.length);
+  if (!value) return null;
+  try {
+    return validTimeZone(decodeURIComponent(value));
+  } catch {
+    return null;
+  }
+}
+
 export function sceneForHour(hour: number): DayScene {
   if (hour >= 5 && hour < 8) return 'dawn';
   if (hour >= 8 && hour < 17) return 'day';
