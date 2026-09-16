@@ -35,17 +35,19 @@ export function FishSwimmer({ id }: { id: string }) {
     const sizeBoost = id === 'char' || id === 'prenanti' ? 1.1 : 1;
     let time = phase * 3;
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
+    const compact = matchMedia('(max-width: 760px), (pointer: coarse)');
     const flip = surface.closest<HTMLElement>('.fish-flip');
     let crop = { x: 0, y: 0, w: source.naturalWidth, h: source.naturalHeight };
 
     // Normalize transparent padding across the existing square and landscape assets.
     try {
       const sample = document.createElement('canvas');
-      sample.width = source.naturalWidth;
-      sample.height = source.naturalHeight;
+      const sampleScale = Math.min(1, 128 / Math.max(source.naturalWidth, source.naturalHeight));
+      sample.width = Math.max(1, Math.round(source.naturalWidth * sampleScale));
+      sample.height = Math.max(1, Math.round(source.naturalHeight * sampleScale));
       const sampler = sample.getContext('2d', { willReadFrequently: true });
       if (sampler) {
-        sampler.drawImage(source, 0, 0);
+        sampler.drawImage(source, 0, 0, sample.width, sample.height);
         const pixels = sampler.getImageData(0, 0, sample.width, sample.height).data;
         let left = sample.width, right = -1, top = sample.height, bottom = -1;
         for (let y = 0; y < sample.height; y++) {
@@ -56,7 +58,10 @@ export function FishSwimmer({ id }: { id: string }) {
             }
           }
         }
-        if (right >= left && bottom >= top) crop = { x: left, y: top, w: right - left + 1, h: bottom - top + 1 };
+        if (right >= left && bottom >= top) {
+          const sx = source.naturalWidth / sample.width, sy = source.naturalHeight / sample.height;
+          crop = { x: left * sx, y: top * sy, w: (right - left + 1) * sx, h: (bottom - top + 1) * sy };
+        }
       }
     } catch {
       // An unprocessable image still renders and swims at its original proportions.
@@ -75,7 +80,7 @@ export function FishSwimmer({ id }: { id: string }) {
         return;
       }
       // Small overlapping strips form a continuous body bend; motion grows near the tail.
-      const strips = 96;
+      const strips = compact.matches ? 24 : 96;
       // Each fish rests between tiny tail corrections; no shared metronome.
       const activity = 0.12 + 0.88 * Math.pow(Math.max(0, Math.sin(time * restSpeed + phase)), 4);
       for (let i = 0; i < strips; i++) {
@@ -89,7 +94,7 @@ export function FishSwimmer({ id }: { id: string }) {
     }
     function tick(now: number) {
       if (disposed) return;
-      if (!last || now - last >= 1000 / 30) {
+      if (!last || now - last >= 1000 / (compact.matches ? 15 : 30)) {
         time += last ? Math.min((now - last) / 1000, 0.08) : 0;
         last = now;
         draw();
@@ -102,11 +107,12 @@ export function FishSwimmer({ id }: { id: string }) {
       last = 0;
       if (disposed) return;
       if (preference.matches) draw(true);
-      else if (visible && !document.hidden && flip?.dataset.flipped !== 'true') frame = requestAnimationFrame(tick);
+      else if (visible && !document.hidden && flip?.dataset.flipped !== 'true'
+        && !(compact.matches && document.documentElement.classList.contains('is-scrolling'))) frame = requestAnimationFrame(tick);
     }
     function resize() {
       if (!surface) return;
-      const ratio = Math.min(devicePixelRatio || 1, 2);
+      const ratio = Math.min(devicePixelRatio || 1, compact.matches ? 1.25 : 2);
       surface.width = Math.max(1, Math.round(surface.clientWidth * ratio));
       surface.height = Math.max(1, Math.round(surface.clientHeight * ratio));
       draw(preference.matches);
@@ -118,6 +124,9 @@ export function FishSwimmer({ id }: { id: string }) {
     resizeObserver.observe(surface);
     visibilityObserver.observe(surface);
     if (flip) flipObserver.observe(flip, { attributes: true, attributeFilter: ['data-flipped'] });
+    const onModeChange = () => { resize(); sync(); };
+    compact.addEventListener('change', onModeChange);
+    document.addEventListener('zeooo-scroll-state', sync);
     preference.addEventListener('change', sync);
     document.addEventListener('visibilitychange', sync);
     resize();
@@ -125,6 +134,8 @@ export function FishSwimmer({ id }: { id: string }) {
       disposed = true;
       cancelAnimationFrame(frame);
       resizeObserver.disconnect(); visibilityObserver.disconnect(); flipObserver.disconnect();
+      compact.removeEventListener('change', onModeChange);
+      document.removeEventListener('zeooo-scroll-state', sync);
       preference.removeEventListener('change', sync);
       document.removeEventListener('visibilitychange', sync);
     };

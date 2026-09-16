@@ -2951,3 +2951,69 @@ h2 em {
   .journal:not(.motion-ready) .journey-about::before { display: none; }
   .living-hero h1 { color: #263f39; }
 }
+
+/* Touch devices keep the same continuous landscape without scroll-driven repainting. */
+.journal[data-motion='compact'] {
+  --about-enter: 1;
+  --opening-progress: 0;
+  --encounter-progress: 0;
+  --closing-progress: 0;
+  --paper-wash: 0;
+}
+.journal[data-motion='compact'][data-chapter='about'] {
+  --opening-progress: 1;
+  --paper-wash: 0.24;
+}
+.journal[data-motion='compact'][data-chapter='collection'] {
+  --opening-progress: 1;
+  --encounter-progress: 1;
+  --paper-wash: 0.54;
+}
+.journal[data-motion='compact'][data-chapter='ending'] {
+  --opening-progress: 1;
+  --closing-progress: 1;
+}
+.journal[data-motion='compact'] .journey-atmosphere,
+.journal[data-motion='compact'] .journey-paper { transition: opacity 450ms ease; }
+.journal[data-motion='compact'] .hero-copy,
+.journal[data-motion='compact'] .journey-scenery .scene-terrain,
+.journal[data-motion='compact'] .journey-scenery .scene-foreground {
+  transform: none;
+  translate: none;
+}
+.journal[data-motion='compact'] .journey-scenery .scene-sun,
+.journal[data-motion='compact'] .journey-scenery .scene-moon { translate: none; }
+.journal[data-motion='compact'] .river-journey .specimen[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+.journal[data-motion='compact']:not([data-chapter='hero']) .hero-copy * {
+  animation-play-state: paused;
+}
+@keyframes mobile-title-light {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+@media (max-width: 760px), (pointer: coarse) {
+  .journal::after, .scene-current, .hero-letterlight { display: none; }
+  .scene-cloudlight, .scene-evening, .scene-stars i,
+  .scene-foreground, .scene-foreground img { animation: none; }
+  .living-hero .hero-title-cn, .living-hero .hero-title-en {
+    animation: mobile-title-light 4.8s ease-in-out infinite alternate;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--letterlight-color) 40%, transparent);
+  }
+  .is-scrolling .river-scene *, .is-scrolling .hero-copy * {
+    animation-play-state: paused !important;
+  }
+  .catch-backdrop { backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .living-hero .hero-title-cn, .living-hero .hero-title-en { animation: none; }
+}
+@media (max-width: 760px), (pointer: coarse) {
+  .fish-flip { perspective: none; }
+  .fish-flip-rotor { transform-style: flat; transition: none; }
+  .fish-flip[data-flipped='true'] .fish-flip-rotor { transform: translate(-50%, -50%); }
+  .fish-flip-front { transform: none; backface-visibility: visible; }
+  .fish-flip-back { display: none; }
+}

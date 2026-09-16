@@ -62,9 +62,14 @@ export function FieldJournal({
     const el = root.current;
     if (!el) return;
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const compactMotion = window.matchMedia('(max-width: 760px), (pointer: coarse)');
     let dispose = () => {};
     function setup() {
       dispose();
+      for (const name of ['--opening-progress', '--encounter-progress', '--about-enter',
+        '--hero-ink', '--closing-progress', '--paper-wash', '--scroll-y', '--read-progress']) {
+        el?.style.removeProperty(name);
+      }
       if (!el || preference.matches) {
         el?.classList.remove('motion-ready');
         el?.style.setProperty('--scroll-y', '0px');
@@ -90,6 +95,44 @@ export function FieldJournal({
       const journey = el.querySelector<HTMLElement>('.river-journey');
       const scenery = el.querySelector<HTMLElement>('.journey-scenery');
       const closing = el.querySelector<HTMLElement>('.journey-ending');
+      // Touch scrolling stays browser-native: no frame-by-frame layout reads or
+      // inherited CSS variable updates across the entire page.
+      if (compactMotion.matches) {
+        el.dataset.motion = 'compact';
+        const chapters = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            el.dataset.chapter = entry.target === hero ? 'hero'
+              : entry.target === about ? 'about'
+              : entry.target === closing ? 'ending' : 'collection';
+          }
+        }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+        [hero, about, collection, el.querySelector('#wishlist'), closing].forEach((node) => {
+          if (node) chapters.observe(node);
+        });
+        let idleTimer = 0;
+        const setScrolling = (active: boolean) => {
+          if (document.documentElement.classList.contains('is-scrolling') === active) return;
+          document.documentElement.classList.toggle('is-scrolling', active);
+          document.dispatchEvent(new Event('zeooo-scroll-state'));
+        };
+        const onMobileScroll = () => {
+          setScrolling(true);
+          window.clearTimeout(idleTimer);
+          idleTimer = window.setTimeout(() => setScrolling(false), 180);
+        };
+        window.addEventListener('scroll', onMobileScroll, { passive: true });
+        dispose = () => {
+          observer.disconnect();
+          chapters.disconnect();
+          window.removeEventListener('scroll', onMobileScroll);
+          window.clearTimeout(idleTimer);
+          setScrolling(false);
+          delete el.dataset.motion;
+          delete el.dataset.chapter;
+        };
+        return;
+      }
       const specimens = [...el.querySelectorAll<HTMLElement>('.specimen')];
       const clamp = (n: number) => Math.max(0, Math.min(1, n));
       const ease = (n: number) => n * n * (3 - 2 * n);
@@ -113,6 +156,14 @@ export function FieldJournal({
               (viewport * 0.66),
           ),
         );
+        const closingRect = closing?.getBoundingClientRect();
+        const journeyBottom = journey?.getBoundingClientRect().bottom ?? 0;
+        const height = document.documentElement.scrollHeight - viewport;
+        const specimenPositions = specimens.map((node) => ({
+          node,
+          naturalTop: node.getBoundingClientRect().top
+            - (1 - Number(node.style.getPropertyValue('--fish-enter') || 1)) * 30,
+        }));
         el.style.setProperty('--opening-progress', String(opening));
         el.style.setProperty('--encounter-progress', String(ease(encounter)));
         el.style.setProperty('--about-enter', String(entering));
@@ -120,7 +171,6 @@ export function FieldJournal({
           '--hero-ink',
           String(1 - ease(clamp(opening / 0.62))),
         );
-        const closingRect = closing?.getBoundingClientRect();
         const closingReveal = ease(clamp((viewport - (closingRect?.top ?? viewport)) / viewport));
         el.style.setProperty('--closing-progress', String(closingReveal));
         el.style.setProperty(
@@ -136,21 +186,15 @@ export function FieldJournal({
           '--scroll-y',
           `${Math.min(window.scrollY, 1100)}px`,
         );
-        const height = document.documentElement.scrollHeight - viewport;
         el.style.setProperty(
           '--read-progress',
           String(height > 0 ? clamp(window.scrollY / height) : 0),
         );
         scenery?.classList.toggle(
           'scene-offscreen',
-          (journey?.getBoundingClientRect().bottom ?? 0) < 0 || (heroRect?.top ?? 0) > viewport,
+          journeyBottom < 0 || (heroRect?.top ?? 0) > viewport,
         );
-        specimens.forEach((node) => {
-          const previous = Number(
-            node.style.getPropertyValue('--fish-enter') || 1,
-          );
-          const naturalTop =
-            node.getBoundingClientRect().top - (1 - previous) * 30;
+        specimenPositions.forEach(({ node, naturalTop }) => {
           const reveal = ease(
             clamp(
               (viewport * 0.96 - naturalTop) / Math.min(190, viewport * 0.25),
@@ -178,9 +222,11 @@ export function FieldJournal({
     }
     setup();
     preference.addEventListener('change', setup);
+    compactMotion.addEventListener('change', setup);
     return () => {
       dispose();
       preference.removeEventListener('change', setup);
+      compactMotion.removeEventListener('change', setup);
     };
   }, []);
   function changeLanguage(next: Language) {

@@ -1,5 +1,5 @@
 'use client';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Dialog,
   DialogTrigger,
@@ -33,7 +33,14 @@ function CatchCard({
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [touchPreview, setTouchPreview] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 761px) and (hover: hover) and (pointer: fine)');
+    const update = () => setCanHover(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const [previewFailed, setPreviewFailed] = useState(false);
   const previewSize = catchPhotoSizes[fish.photos[0]];
   const trigger = useRef<HTMLButtonElement>(null);
@@ -41,10 +48,10 @@ function CatchCard({
   const origin = useRef<DOMRect | null>(null);
   const pointer = useRef('keyboard');
   const hasPreview = Boolean(fish.photos[0]) && !previewFailed;
-  const flipped = hasPreview && (hovered || focused || touchPreview);
+  const flipped = hasPreview && canHover && (hovered || focused);
   useLayoutEffect(() => {
     if (!open || !origin.current
-      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 760px), (pointer: coarse)').matches
       || trigger.current?.closest('.motion-paused')) return;
     let animation: Animation | undefined;
     // Wait for the dialog portal to mount and lay out its intrinsic photograph.
@@ -77,19 +84,11 @@ function CatchCard({
       <Dialog
         open={open}
         onOpenChange={(value) => {
-          // Touch: one tap reveals the photograph; the next opens its details.
-          // Keyboard and mouse clicks always open immediately.
-          if (value && pointer.current !== 'keyboard' && pointer.current !== 'mouse'
-            && hasPreview && !touchPreview) {
-            setTouchPreview(true);
-            return;
-          }
           if (value) {
             origin.current = trigger.current?.querySelector('.fish-flip-rotor')?.getBoundingClientRect() ?? null;
             setFrame(0);
             setImageFailed(false);
           } else {
-            setTouchPreview(false);
             setFocused(false);
             setHovered(false);
           }
@@ -104,15 +103,15 @@ function CatchCard({
               className="fish-record-card"
               onPointerDown={(event) => { pointer.current = event.pointerType; }}
               onPointerEnter={(event) => {
-                if (event.pointerType === 'mouse') { pointer.current = 'mouse'; setHovered(true); }
+                if (canHover && event.pointerType === 'mouse') { pointer.current = 'mouse'; setHovered(true); }
               }}
               onPointerLeave={() => setHovered(false)}
               onFocus={() => { if (pointer.current === 'keyboard') setFocused(true); }}
-              onBlur={() => { setFocused(false); setTouchPreview(false); }}
+              onBlur={() => { setFocused(false); }}
               onKeyDown={(event) => {
                 pointer.current = 'keyboard';
                 if (event.key === 'Escape') {
-                  setFocused(false); setHovered(false); setTouchPreview(false);
+                  setFocused(false); setHovered(false);
                 }
               }}
               aria-label={t(
@@ -130,7 +129,7 @@ function CatchCard({
               <span className="fish-flip-face fish-flip-front">
                 <FishPrint id={fish.id} name={fish.name} date={fish.date} place={fish.place} />
               </span>
-              {hasPreview && (
+              {hasPreview && canHover && (
                 <span className="fish-flip-face fish-flip-back">
                   <FieldFrame className="fish-photo-print">
                     <img
