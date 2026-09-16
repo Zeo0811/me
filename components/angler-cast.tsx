@@ -3,16 +3,16 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
-const frames = ['zeo-angler', 'zeo-cast-lift', 'zeo-cast-backcast', 'zeo-cast-forward', 'zeo-cast-lookback'];
+const frames = ['zeo-angler', 'zeo-cast-lift', 'zeo-cast-backcast', 'zeo-cast-forward', 'zeo-cast-lookback-v2'];
 // A held drift, pickup, backcast stop, forward stroke, then another drift.
 const sequence = [
-  { frame: 0, hold: 3400 },
-  { frame: 1, hold: 240 },
-  { frame: 2, hold: 200 },
-  { frame: 4, hold: 560 },
-  { frame: 2, hold: 140 },
-  { frame: 1, hold: 130 },
-  { frame: 3, hold: 420 },
+  { frame: 0, hold: 2800 },
+  { frame: 1, hold: 210 },
+  { frame: 2, hold: 170 },
+  { frame: 4, hold: 440 },
+  { frame: 2, hold: 120 },
+  { frame: 1, hold: 110 },
+  { frame: 3, hold: 350 },
 ];
 
 /** Discrete image cels: no continuous redraw or independent character scaling. */
