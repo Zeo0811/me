@@ -1,8 +1,9 @@
 'use client';
 import { useRef, type PointerEvent } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, ArrowDown, Check, Plus, Waves } from '@/components/journal-icons';
-import { species, profileUrl, photoPostUrl } from '@/content/journal';
+import { SpeciesCabinet } from '@/components/species-cabinet';
+import { ArrowUpRight, ArrowDown, Plus, Waves } from '@/components/journal-icons';
+import { profileUrl, photoPostUrl } from '@/content/journal';
 
 export default function Home() {
   const photo = useRef<HTMLDivElement>(null);
@@ -50,14 +51,8 @@ export default function Home() {
         </section>
 
         <section id="collection" className="collection wrap" aria-labelledby="collection-title">
-          <div className="section-heading"><div><p className="eyebrow">01 / THE COLLECTION</p><h2 id="collection-title">已经相遇<span className="heading-dot">.</span></h2></div><div className="section-meta"><strong>09</strong><span>种鱼 · 飞钓野钓记录</span></div></div>
-          <div className="species-grid">
-            {species.map((fish, index) => <article className="species-card" key={fish.name}>
-              <div className="species-top"><span className="record-number">{String(index+1).padStart(2,'0')} / FIELD RECORD</span><Check size={16} strokeWidth={1.5} aria-label="已解锁"/></div>
-              <h3>{fish.name}</h3>
-              <div className="species-bottom"><span>{fish.name === '中华倒刺鲃' ? '清波 · 55 公分记录' : '野钓 · 已解锁'}</span><span className="little-line" aria-hidden="true"/></div>
-            </article>)}
-          </div>
+          <div className="section-heading"><div><p className="eyebrow">01 / THE COLLECTION</p><h2 id="collection-title">已解锁鱼种<span className="heading-dot">.</span></h2></div><div className="section-meta"><strong>09</strong><span>种鱼 · 飞钓野钓记录</span></div></div>
+          <SpeciesCabinet/>
           <div className="collection-foot"><span>每一个名字，都连着一段在水边的时间。</span><Waves size={28} strokeWidth={1}/></div>
         </section>
 

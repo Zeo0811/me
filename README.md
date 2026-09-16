@@ -12,3 +12,8 @@
 未加入后台编辑、上传、登录业务或云数据库；内容目前由项目文件维护。默认部署为仅本人可见。没有导入私密帖子或聊天原始内容。
 
 本地：npm run dev。发布构建：npm run build。对减少动态效果设置提供降级。
+
+
+## 鱼获记录维护
+
+编辑 `content/journal.ts` 的 date、place、photos、caption、source 和 locationBasis。照片放在 public/images/catches/，photos 使用 /images/catches/ 开头的站内路径。空字符串与空照片数组会显示待补充。日期默认按笔记时间标注，换成实际鱼获日期时也应同步调整字段标签和来源说明。当前没有网页内保存编辑功能。
