@@ -1,0 +1,35 @@
+{
+  "generator": "built-in image_gen, one reference-guided edit per new terrain",
+  "reference": "public/images/hero/terrain.webp",
+  "size": [
+    1536,
+    1024
+  ],
+  "alphaNote": "All have real alpha=0 sky with a soft horizon fringe. Generated terrain alpha is near-opaque (typically 253/254), not strictly 255. Alpha preserved in WebP; no post-generation painting.",
+  "assets": [
+    {
+      "scene": "dawn",
+      "publicFile": "public/images/hero/dawn-terrain.webp",
+      "original": "../design/time-scenes/dawn-terrain.png",
+      "prompt": "Use case: lighting-weather\nAsset type: transparent terrain layer, 1536 x 1024 PNG, for a vintage illustrated fly-fishing website.\nInput image: edit target, the existing terrain illustration. Treat its exact composition, all silhouettes and all geometry as locked.\nPrimary request: make ONE DAWN illumination and palette variant of this exact landscape. Change only illumination and colors. Retain exactly the same framing, mountain peaks and ridges, forests and trees, winding river, banks, rocks, coastline, sea placement, fine engraved linework, and foreground proportions. No cropping, moving, adding, or removing landscape features.\nLight and palette: fresh early dawn with cool misty sage and soft teal forests, pale peach-pink first sunlight touching mountain ridges, snow highlights and the winding river; restrained vintage engraved travel illustration. Keep highlights delicate, shadows readable, muted natural palette. The morning must feel fresh, not like evening. No heavy yellow wash, no orange sunset, no dramatic red light.\nTransparency requirements: the entire sky region above the existing terrain horizon must be genuinely transparent alpha, not painted, not a checkerboard, not black, not white. Preserve the exact silhouette separating terrain and sky. Terrain below the horizon must remain opaque. Do not add fog, haze, glow, or anything outside the existing silhouette. Do not paint any sky. No sun, moon, stars, clouds, text, logos, new objects, or new scenery.\nOutput exactly one transparent PNG in 1536 x 1024 landscape aspect ratio."
+    },
+    {
+      "scene": "day",
+      "publicFile": "public/images/hero/day-terrain.webp",
+      "original": "../design/time-scenes/day-terrain.png",
+      "prompt": "Use case: lighting-weather\nEdit target: the provided 1536x1024 terrain layer. Produce exactly ONE DAY / NOON variant as a 1536x1024 PNG with a genuinely transparent sky (real alpha channel), for registration and crossfading against this exact reference.\nChange only illumination and color palette: clear midday light, cool blue-silver river and sea, clean pale mountain snow, lively natural pine green and sage green forest, bright neutral sunlight, crisp air. Preserve vintage engraved travel illustration, fine hatching and print texture; not photorealistic. No yellow or sepia sunset cast.\nSTRICT INVARIANTS: Keep exactly the same canvas, camera, composition and all terrain geometry. Keep every mountain peak and outline, forest silhouette and trees, river meander, shoreline, sea horizon, rocks, grasses and foreground placement as closely pixel aligned to the reference as possible. Do not add, remove or move any terrain objects or change the horizon. The landscape below its mountain and sea silhouette remains fully opaque. Make ALL sky above that silhouette fully transparent, removing the dark soft sky halo as well, with clean alpha edges and no opaque sky pixels. Do not paint a checkerboard. No sun, moon, stars, clouds, text, letters, logos or border. Deliver the transparent terrain cutout only.\n"
+    },
+    {
+      "scene": "sunset",
+      "publicFile": "public/images/hero/terrain.webp",
+      "note": "Existing approved terrain reused."
+    },
+    {
+      "scene": "night",
+      "publicFile": "public/images/hero/night-terrain.webp",
+      "original": "../design/time-scenes/night-terrain.png",
+      "prompt": "Use case: precise-object-edit. Edit the reference landscape into a NIGHT terrain layer for the same website. Preserve the exact 1536x1024 landscape composition and framing, all mountain peaks and their silhouettes, forest clusters, river geometry and meanders, shorelines, rocks, coastline and sea placement, and the original vintage engraved etched print texture as closely as possible. Do not move, add, remove, or resize any objects. Change ONLY illumination and palette: moonlit blue-black pine forest, deep desaturated indigo and dark teal mountain slopes and meadows, subtly silver-blue snow and river/sea highlights. Calm, legible, richly detailed night landscape, restrained highlights, no warm daylight cream areas and no bright yellow. Moonlight is implied by soft cool illumination; do NOT draw any moon, stars, sun, lamps, buildings, people, or text. Crucial compositing requirement: this must be a genuine transparent PNG. Entire sky above the existing mountain/horizon silhouettes must be transparent alpha=0, with no painted night sky or checkerboard. Terrain below the original horizon must be opaque, including landscape highlights, sea, river, and snow. Preserve detailed horizon edges. Return exactly one 1536x1024 PNG night terrain layer.\n"
+    }
+  ],
+  "otherLayers": "Code-rendered sky, sun, moon, and stars; original foreground.webp is reused with scene-specific CSS color adjustments. Water highlight mask reads the selected terrain, so its geometry remains aligned."
+}

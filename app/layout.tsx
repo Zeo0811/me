@@ -1,10 +1,26 @@
 import type { Metadata } from 'next';
+import { requestLanguage } from '@/lib/request-language';
 import './globals.css';
-export const metadata: Metadata = {
-  metadataBase: new URL('https://zeo-in-the-current.zeo0811.chatgpt.site'),
-  title: 'Zeo — In sync with the current',
-  description: '水上学钓，林中观鸟。Zeo 的个人飞钓图鉴：已经相遇的九种鱼，和下一次想遇见的大个体白甲鱼。',
-};
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="zh-CN"><body>{children}</body></html>;
+export async function generateMetadata(): Promise<Metadata> {
+  const language = await requestLanguage();
+  return {
+    title: language === 'zh' ? 'Zeooo — 溪流手记' : 'Zeooo — A Field Journal',
+    description:
+      language === 'zh'
+        ? '水上学钓，林中观鸟。九种已经相遇的鱼，与下一段河流的期待。'
+        : 'A personal fly fishing journal. Nine species encountered, and more rivers still to come.',
+    icons: { icon: '/favicon.svg' },
+  };
+}
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang={(await requestLanguage()) === 'zh' ? 'zh-CN' : 'en'}>
+      <head><link rel="license" href="/credits.txt" /></head>
+      <body>{children}</body>
+    </html>
+  );
 }

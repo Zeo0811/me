@@ -1,0 +1,62 @@
+{
+  "char": {
+    "src": "/images/fish-icons/char.webp",
+    "width": 640,
+    "height": 640
+  },
+  "schizothorax": {
+    "src": "/images/fish-icons/schizothorax.webp",
+    "width": 640,
+    "height": 320
+  },
+  "prenanti": {
+    "src": "/images/fish-icons/prenanti.webp",
+    "width": 640,
+    "height": 640
+  },
+  "barbel": {
+    "src": "/images/fish-icons/barbel.webp",
+    "width": 640,
+    "height": 427
+  },
+  "gudgeon": {
+    "src": "/images/fish-icons/gudgeon-v2.webp",
+    "width": 640,
+    "height": 640
+  },
+  "whitearmor": {
+    "src": "/images/fish-icons/whitearmor.webp",
+    "width": 640,
+    "height": 427
+  },
+  "mandarin": {
+    "src": "/images/fish-icons/mandarin.webp",
+    "width": 640,
+    "height": 640
+  },
+  "lenok": {
+    "src": "/images/fish-icons/lenok.webp",
+    "width": 640,
+    "height": 427
+  },
+  "grayling": {
+    "src": "/images/fish-icons/grayling.webp",
+    "width": 640,
+    "height": 640
+  },
+  "gt": {
+    "src": "/images/fish-icons/gt.webp",
+    "width": 640,
+    "height": 320
+  },
+  "ayu": {
+    "src": "/images/fish-icons/ayu.webp",
+    "width": 640,
+    "height": 256
+  },
+  "bamboo": {
+    "src": "/images/fish-icons/bamboo.webp",
+    "width": 640,
+    "height": 320
+  }
+}

@@ -40,3 +40,7 @@ next-env.d.ts
 # Local design research
 /.superdesign/
 *.tsbuildinfo
+
+# Country/timezone lookup data is prepared on build, not committed.
+.geoip/
+/.railway/

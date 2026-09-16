@@ -1,0 +1,14 @@
+node_modules
+.git
+.superdesign
+.openai
+.railway
+.wrangler
+.vinext
+.next
+dist
+.geoip
+.env*
+outputs
+work
+*.tsbuildinfo
