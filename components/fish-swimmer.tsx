@@ -26,10 +26,11 @@ export function FishSwimmer({ id }: { id: string }) {
     let frame = 0;
     let visible = false;
     let last = 0;
+    let pixelRatio = 1;
     const hash = [...id].reduce((value, letter) => Math.imul(value ^ letter.charCodeAt(0), 16777619), 2166136261) >>> 0;
     const variation = (hash % 997) / 997;
     const phase = ((hash >>> 10) % 991) / 991 * Math.PI * 2;
-    const tailSpeed = 0.7 + variation * 0.8;
+    const tailSpeed = 1.35 + variation * 0.9;
     const restSpeed = 0.23 + ((hash >>> 18) % 100) / 310;
     // These two illustrations need slightly more presence in the shared frame.
     const sizeBoost = id === 'char' || id === 'prenanti' ? 1.1 : 1;
@@ -73,20 +74,22 @@ export function FishSwimmer({ id }: { id: string }) {
       context.clearRect(0, 0, w, h);
       const scale = Math.min(w * 0.88 * sizeBoost / crop.w, h * 0.78 * sizeBoost / crop.h);
       const fw = crop.w * scale, fh = crop.h * scale;
-      const x = (w - fw) / 2 + (still ? 0 : Math.sin(time * (0.11 + variation * 0.09) + phase) * w * 0.003);
-      const y = (h - fh) / 2 + (still ? 0 : Math.sin(time * (0.16 + variation * 0.13) - phase) * h * 0.004);
+      const x = (w - fw) / 2 + (still ? 0 : Math.sin(time * (0.38 + variation * 0.16) + phase) * w * 0.007);
+      const y = (h - fh) / 2 + (still ? 0 : Math.sin(time * (0.48 + variation * 0.2) - phase) * h * 0.009);
       if (still) {
         context.drawImage(source, crop.x, crop.y, crop.w, crop.h, x, y, fw, fh);
         return;
       }
       // Small overlapping strips form a continuous body bend; motion grows near the tail.
       const strips = compact.matches ? 24 : 96;
-      // Each fish rests between tiny tail corrections; no shared metronome.
-      const activity = 0.12 + 0.88 * Math.pow(Math.max(0, Math.sin(time * restSpeed + phase)), 4);
+      // A visible but restrained tail correction even during the quieter phase.
+      // Bound amplitude in CSS pixels so a small mobile fish still feels alive.
+      const amplitude = Math.min(4 * pixelRatio, Math.max(2.2 * pixelRatio, fh * 0.028));
+      const activity = 0.6 + 0.4 * (0.5 + 0.5 * Math.sin(time * restSpeed + phase));
       for (let i = 0; i < strips; i++) {
         const u = i / strips;
         const tailWeight = Math.pow(Math.max(0, (u - 0.58) / 0.42), 2);
-        const sway = Math.sin(time * tailSpeed - u * 3.4 + phase) * tailWeight * fh * (0.009 + variation * 0.005) * activity;
+        const sway = Math.sin(time * tailSpeed - u * 3.4 + phase) * tailWeight * amplitude * activity;
         const sw = Math.min(crop.w - u * crop.w, crop.w / strips + 0.6 / scale);
         context.drawImage(source, crop.x + u * crop.w, crop.y, sw, crop.h,
           x + u * fw, y + sway, sw * scale, fh);
@@ -113,6 +116,7 @@ export function FishSwimmer({ id }: { id: string }) {
     function resize() {
       if (!surface) return;
       const ratio = Math.min(devicePixelRatio || 1, compact.matches ? 1.25 : 2);
+      pixelRatio = ratio;
       surface.width = Math.max(1, Math.round(surface.clientWidth * ratio));
       surface.height = Math.max(1, Math.round(surface.clientHeight * ratio));
       draw(preference.matches);

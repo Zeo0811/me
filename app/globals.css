@@ -2907,7 +2907,7 @@ h2 em {
 
 /* A translucent continuation of the landscape, with larger living fish studies. */
 .journal[data-scene='night'].motion-ready .journey-paper {
-  opacity: calc(var(--encounter-progress, 0) * 0.76 * (1 - var(--closing-progress, 0)));
+  opacity: calc(var(--paper-wash, 0) * 1.35);
 }
 .fish-print.field-frame { background: transparent; }
 .fish-print > .frame-mat {
@@ -2967,14 +2967,14 @@ h2 em {
 .journal[data-motion='compact'][data-chapter='collection'] {
   --opening-progress: 1;
   --encounter-progress: 1;
-  --paper-wash: 0.54;
+  --paper-wash: 0.48;
 }
 .journal[data-motion='compact'][data-chapter='ending'] {
   --opening-progress: 1;
   --closing-progress: 1;
 }
 .journal[data-motion='compact'] .journey-atmosphere,
-.journal[data-motion='compact'] .journey-paper { transition: opacity 450ms ease; }
+.journal[data-motion='compact'] .journey-paper { transition: opacity 2200ms cubic-bezier(0.4, 0, 0.2, 1); }
 .journal[data-motion='compact'] .hero-copy,
 .journal[data-motion='compact'] .journey-scenery .scene-terrain,
 .journal[data-motion='compact'] .journey-scenery .scene-foreground {

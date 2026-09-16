@@ -150,6 +150,10 @@ export function FieldJournal({
           (viewport * 0.92 - (collectionRect?.top ?? viewport)) /
             (viewport * 0.9),
         );
+        // Let the paper wash build across a longer scroll distance than the title.
+        const wash = ease(clamp(
+          (viewport * 0.95 - (collectionRect?.top ?? viewport)) / (viewport * 1.5),
+        ));
         const entering = ease(
           clamp(
             (viewport * 0.86 - (aboutRect?.top ?? viewport)) /
@@ -178,7 +182,7 @@ export function FieldJournal({
           String(
             Math.min(
               1,
-              (0.24 * ease(clamp(opening / 0.92)) + 0.30 * ease(encounter)) * (1 - closingReveal),
+              (0.24 * ease(clamp(opening / 0.92)) + 0.24 * wash) * (1 - closingReveal),
             ),
           ),
         );
