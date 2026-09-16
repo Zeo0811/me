@@ -76,6 +76,16 @@ export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }:
             />
           </g>
         </svg>
+        <div className="scene-angler">
+          <Image
+            unoptimized
+            src="/images/hero/zeo-angler.webp"
+            alt=""
+            width={640}
+            height={640}
+            loading={priority ? 'eager' : 'lazy'}
+          />
+        </div>
       </div>
       <div className="scene-foreground">
         <Image

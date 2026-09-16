@@ -3017,3 +3017,20 @@ h2 em {
   .fish-flip-front { transform: none; backface-visibility: visible; }
   .fish-flip-back { display: none; }
 }
+
+/* The angler shares the terrain coordinate system, so his knees stay in the
+   same river bend through parallax and the narrow-screen landscape crop. */
+.scene-angler {
+  position: absolute;
+  z-index: 2;
+  left: 40%;
+  top: 49%;
+  width: 9%;
+  aspect-ratio: 1;
+  pointer-events: none;
+  filter: saturate(0.8);
+}
+.scene-angler img { display: block; width: 100%; height: 100%; }
+.journal[data-scene='dawn'] .scene-angler { filter: saturate(0.65) brightness(0.96); }
+.journal[data-scene='day'] .scene-angler { filter: saturate(0.8) brightness(1.06); }
+.journal[data-scene='night'] .scene-angler { filter: saturate(0.55) brightness(0.62) hue-rotate(12deg); }
