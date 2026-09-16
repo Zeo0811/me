@@ -49,6 +49,7 @@ export default defineConfig(async () => {
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
+    resolve: { dedupe: ['react', 'react-dom'] },
     plugins: [
       vinext(),
       sites(),

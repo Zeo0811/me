@@ -1,7 +1,7 @@
 'use client';
 import { useRef, type PointerEvent } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, ArrowDown, Check, Plus, Waves } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, Check, Plus, Waves } from '@/components/journal-icons';
 import { species, profileUrl, photoPostUrl } from '@/content/journal';
 
 export default function Home() {
