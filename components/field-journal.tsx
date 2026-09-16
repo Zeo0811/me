@@ -66,7 +66,7 @@ export function FieldJournal({
     let dispose = () => {};
     function setup() {
       dispose();
-      for (const name of ['--opening-progress', '--encounter-progress', '--about-enter',
+      for (const name of ['--opening-progress', '--encounter-progress', '--about-enter', '--about-wash',
         '--hero-ink', '--closing-progress', '--paper-wash', '--scroll-y', '--read-progress']) {
         el?.style.removeProperty(name);
       }
@@ -91,6 +91,7 @@ export function FieldJournal({
       );
       const hero = el.querySelector<HTMLElement>('.living-hero');
       const about = el.querySelector<HTMLElement>('#about');
+      const aboutTitle = el.querySelector<HTMLElement>('#about-title');
       const collection = el.querySelector<HTMLElement>('#collection');
       const journey = el.querySelector<HTMLElement>('.river-journey');
       const scenery = el.querySelector<HTMLElement>('.journey-scenery');
@@ -99,6 +100,23 @@ export function FieldJournal({
       // inherited CSS variable updates across the entire page.
       if (compactMotion.matches) {
         el.dataset.motion = 'compact';
+        // Cache the title's 75%-viewport crossing. Scroll only compares numbers;
+        // it never measures layout or updates a whole-page animation variable.
+        let washStart = Infinity;
+        const syncAboutWash = () => {
+          const active = String(window.scrollY >= washStart);
+          if (el.dataset.aboutWash !== active) el.dataset.aboutWash = active;
+        };
+        const measureWashStart = () => {
+          washStart = aboutTitle
+            ? aboutTitle.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.75
+            : Infinity;
+          syncAboutWash();
+        };
+        const washResize = new ResizeObserver(measureWashStart);
+        [hero, about, aboutTitle].forEach(node => { if (node) washResize.observe(node); });
+        window.addEventListener('resize', measureWashStart, { passive: true });
+        measureWashStart();
         const chapters = new IntersectionObserver((entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
@@ -117,6 +135,7 @@ export function FieldJournal({
           document.dispatchEvent(new Event('zeooo-scroll-state'));
         };
         const onMobileScroll = () => {
+          syncAboutWash();
           setScrolling(true);
           window.clearTimeout(idleTimer);
           idleTimer = window.setTimeout(() => setScrolling(false), 180);
@@ -125,11 +144,14 @@ export function FieldJournal({
         dispose = () => {
           observer.disconnect();
           chapters.disconnect();
+          washResize.disconnect();
+          window.removeEventListener('resize', measureWashStart);
           window.removeEventListener('scroll', onMobileScroll);
           window.clearTimeout(idleTimer);
           setScrolling(false);
           delete el.dataset.motion;
           delete el.dataset.chapter;
+          delete el.dataset.aboutWash;
         };
         return;
       }
@@ -143,6 +165,8 @@ export function FieldJournal({
         const heroRect = hero?.getBoundingClientRect();
         const aboutRect = about?.getBoundingClientRect();
         const collectionRect = collection?.getBoundingClientRect();
+        const titleTop = aboutTitle?.getBoundingClientRect().top ?? viewport;
+        const aboutWash = ease(clamp((viewport * 0.75 - titleTop) / (viewport * 0.6)));
         const opening = clamp(
           -(heroRect?.top ?? 0) / (heroRect?.height || viewport),
         );
@@ -171,6 +195,7 @@ export function FieldJournal({
         el.style.setProperty('--opening-progress', String(opening));
         el.style.setProperty('--encounter-progress', String(ease(encounter)));
         el.style.setProperty('--about-enter', String(entering));
+        el.style.setProperty('--about-wash', String(aboutWash));
         el.style.setProperty(
           '--hero-ink',
           String(1 - ease(clamp(opening / 0.62))),
@@ -182,7 +207,7 @@ export function FieldJournal({
           String(
             Math.min(
               1,
-              (0.24 * ease(clamp((opening - 0.35) / 0.57)) + 0.24 * wash) * (1 - closingReveal),
+              (0.24 * aboutWash + 0.24 * wash) * (1 - closingReveal),
             ),
           ),
         );

@@ -2025,7 +2025,7 @@ h2 em {
   background: linear-gradient(180deg, #eee9dbeb 0%, #eee9dbcc 43%, #e5e4d68c 70%, #d4decf0d 100%);
 }
 .motion-ready .journey-atmosphere {
-  opacity: calc(var(--about-enter, 0) * var(--opening-progress, 0) * (1 - var(--encounter-progress, 0)));
+  opacity: calc(var(--about-wash, 0) * (1 - var(--encounter-progress, 0)));
 }
 .journey-paper {
   z-index: 1;
@@ -2955,14 +2955,16 @@ h2 em {
 /* Touch devices keep the same continuous landscape without scroll-driven repainting. */
 .journal[data-motion='compact'] {
   --about-enter: 1;
+  --about-wash: 0;
   --opening-progress: 0;
   --encounter-progress: 0;
   --closing-progress: 0;
   --paper-wash: 0;
 }
+.journal[data-motion='compact'][data-about-wash='true'] { --about-wash: 1; }
 .journal[data-motion='compact'][data-chapter='about'] {
   --opening-progress: 1;
-  --paper-wash: 0.24;
+  --paper-wash: calc(var(--about-wash, 0) * 0.24);
 }
 .journal[data-motion='compact'][data-chapter='collection'] {
   --opening-progress: 1;
