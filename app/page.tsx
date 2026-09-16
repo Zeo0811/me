@@ -1,5 +1,6 @@
 'use client';
 import { useRef, type PointerEvent } from 'react';
+import Image from 'next/image';
 import { ArrowUpRight, ArrowDown, Check, Plus, Waves } from 'lucide-react';
 import { species, profileUrl, photoPostUrl } from '@/content/journal';
 
@@ -41,7 +42,7 @@ export default function Home() {
             <div className="photo-back" aria-hidden="true"/>
             <div className="photo-card" ref={photo}>
               <div className="photo-top"><span>ON THE WATER</span><span>↗</span></div>
-              <img src="/images/zeo-river.webp" alt="Zeo 在林间溪流中双手托起一条鱼" width="1080" height="1440" fetchPriority="high"/>
+              <Image unoptimized src="/images/zeo-river.webp" alt="Zeo 在林间溪流中双手托起一条鱼" width="1080" height="1440" fetchPriority="high"/>
               <div className="photo-caption"><span>Another one on the list.</span><a href={photoPostUrl} target="_blank" rel="noreferrer" aria-label="查看这张照片的小红书原帖"><ArrowUpRight size={18}/></a></div>
             </div>
             <span className="photo-credit">PHOTO BY 包哥爱玩野路子</span>
