@@ -13,4 +13,7 @@ export const catchPhotoSizes: Record<string, { width: number; height: number }> 
   '/images/catches/bangui.webp': { width: 1920, height: 1080 },
   '/images/zeo-river.webp': { width: 1080, height: 1440 },
   '/images/catches/grayling-5345.webp': { width: 1920, height: 1080 },
+  '/images/catches/redeye-5103.webp': { width: 1080, height: 1920 },
+  '/images/catches/redeye-5082.webp': { width: 1920, height: 1080 },
+  '/images/catches/redeye-5073.webp': { width: 1080, height: 1920 },
 };

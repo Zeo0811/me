@@ -225,7 +225,7 @@ function CatchCard({
               <span className="catch-name-en" lang="en">{englishFishNames[record.id]}</span>
             </DialogTitle>
             <DialogDescription className="sr-only">
-              {t('鱼获照片；日期与地区按小红书笔记记录。', 'Catch photographs; dates and regions follow the Xiaohongshu notes.')}
+              {t('鱼获照片、解锁日期与地点。', 'Catch photographs, unlock date and location.')}
             </DialogDescription>
             <dl className="catch-facts">
               <div>

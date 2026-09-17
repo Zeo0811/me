@@ -1,3 +1,4 @@
+import { species } from '@/content/journal';
 import type { Metadata } from 'next';
 import { requestLanguage } from '@/lib/request-language';
 import '@fontsource/libre-baskerville/latin-400.css';
@@ -11,8 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'About Zeo',
     description:
       language === 'zh'
-        ? '水上学钓，林中观鸟。九种已经相遇的鱼，与下一段河流的期待。'
-        : 'A personal fly fishing journal. Nine species encountered, and more rivers still to come.',
+        ? `水上学钓，林中观鸟。${species.length}种已经相遇的鱼，与下一段河流的期待。`
+        : `A personal fly fishing journal. ${species.length} species encountered, and more rivers still to come.`,
     icons: { icon: '/favicon.svg' },
   };
 }

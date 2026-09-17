@@ -8,7 +8,7 @@ export type FishRecord = {
   caption: string;
   locationBasis?: string;
 };
-// These are note dates and note locations, not verified catch dates/cities.
+// Legacy entries use note dates/regions; each locationBasis records user corrections.
 // Replace date/place and photo paths here when Zeo corrects the records.
 const sichuanPost = 'https://www.xiaohongshu.com/explore/69fc000d0000000023004dc9';
 export const species: FishRecord[] = [
@@ -21,6 +21,7 @@ export const species: FishRecord[] = [
   { id: 'mandarin', name: '斑鳜', date: '2026-05-07', place: '四川', source: sichuanPost, photos: ['/images/catches/bangui.webp'], caption: '意外的相遇，也值得记上一页。', locationBasis: '原帖显示05-07，本人确认年份为2026；地区来自笔记标题。' },
   { id: 'lenok', name: '细鳞鲑', date: '2026-09-12', place: '黑龙江', source: 'https://www.xiaohongshu.com/explore/6aa48d3b000000000b034b31', photos: ['/images/zeo-river.webp'], caption: 'Done! Another one on the list.', locationBasis: '按 9 月 16 日读取的「4 天前 · 黑龙江」暂录；照片对应待本人复核。摄影：包哥爱玩野路子。' },
   { id: 'grayling', name: '北极茴鱼', date: '2026-09-12', place: '黑龙江', photos: ['/images/catches/grayling-5345.webp'], caption: '溪流中的北极茴鱼。', locationBasis: '照片由本人提供 IMG_5345.HEIC。本人确认解锁时间和地点与细鳞鲑相同，沿用其当前记录 2026-09-12 / 黑龙江；该日期原按小红书相对发帖时间暂录。' },
+  { id: 'redeye', name: '红眼鳟', date: '2026-08-15', place: '重庆', photos: ['/images/catches/redeye-5103.webp', '/images/catches/redeye-5082.webp', '/images/catches/redeye-5073.webp'], caption: '重庆的一次相遇。', locationBasis: '鱼种、解锁日期2026-08-15及地点重庆由本人确认；照片顺序为IMG_5103、IMG_5082、IMG_5073。' },
 ];
 export const profileUrl = 'https://www.xiaohongshu.com/user/profile/5bc58ba89fc6ff00016c7e3f';
 export const photoPostUrl = 'https://www.xiaohongshu.com/explore/6aa48d3b000000000b034b31';

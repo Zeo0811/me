@@ -58,5 +58,10 @@
     "src": "/images/fish-icons/bamboo.webp",
     "width": 640,
     "height": 320
+  },
+  "redeye": {
+    "src": "/images/fish-icons/redeye.webp",
+    "width": 640,
+    "height": 427
   }
 }

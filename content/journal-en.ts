@@ -11,6 +11,7 @@ export const englishFishNames: Record<string, string> = {
   mandarin: 'Leopard mandarin fish',
   lenok: 'Lenok',
   grayling: 'Arctic grayling',
+  redeye: 'Barbel chub',
   gt: 'Giant trevally',
   ayu: 'Ayu sweetfish',
   bamboo: 'Spinibarbus denticulatus',
@@ -19,6 +20,10 @@ const translations: Record<
   string,
   Pick<FishRecord, 'caption' | 'locationBasis'>
 > = {
+  redeye: {
+    caption: 'An encounter in Chongqing.',
+    locationBasis: 'Species, unlock date August 15, 2026, and Chongqing location confirmed by Zeo. Photos ordered IMG_5103, IMG_5082, IMG_5073.',
+  },
   char: {
     caption: 'A whitespotted char in the stream.',
     locationBasis:
@@ -74,6 +79,7 @@ export function englishRecord(fish: FishRecord): FishRecord {
     place:
       (
         {
+          重庆: 'Chongqing',
           四川: 'Sichuan',
           川西: 'Western Sichuan',
           黑龙江: 'Heilongjiang',
