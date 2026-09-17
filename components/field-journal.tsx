@@ -219,7 +219,8 @@ export function FieldJournal({
         set(heading, '--encounter-progress', encounter);
         set(scenery, '--about-wash', aboutWash);
         set(scenery, '--encounter-progress', encounter);
-        set(scenery, '--paper-wash', Math.min(1, (0.24 * aboutWash + 0.24 * wash) * (1 - closingReveal)));
+        // Keep the collection's translucent paper through the simulator entrance.
+        set(scenery, '--paper-wash', Math.min(1, 0.24 * aboutWash + 0.24 * wash));
         set(closing, '--closing-progress', closingReveal);
         scenery?.classList.toggle('scene-offscreen', journeyBottom - y < 0 || heroTop - y > viewport);
         for (const item of positions) {

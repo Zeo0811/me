@@ -19,6 +19,9 @@ import { species, type FishRecord } from '@/content/journal';
 import { englishRecord, englishFishNames } from '@/content/journal-en';
 import type { Language } from '@/lib/locale';
 
+// ISO dates sort chronologically; stable sorting preserves each day's existing order.
+const chronologicalSpecies = [...species].sort((a, b) => a.date.localeCompare(b.date));
+
 function CatchCard({
   record,
   index,
@@ -260,7 +263,7 @@ function CatchCard({
 export function SpeciesCabinet({ language }: { language: Language }) {
   return (
     <div className="cabinet-grid fish-print-grid">
-      {species.map((fish, index) => (
+      {chronologicalSpecies.map((fish, index) => (
         <CatchCard
           key={fish.id}
           record={fish}

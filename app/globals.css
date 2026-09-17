@@ -2797,7 +2797,7 @@ h2 em {
   position: relative;
   text-align: left;
 }
-.journey-ending .collection-heading h2 { color: var(--scene-ink); }
+.journey-ending .collection-heading h2 { color: #24382e; }
 .drift-entry {
   position: relative;
   isolation: isolate;
@@ -2959,6 +2959,8 @@ h2 em {
 }
 .journal[data-motion='compact'][data-chapter='ending'] {
   --opening-progress: 1;
+  --encounter-progress: 1;
+  --paper-wash: 0.48;
   --closing-progress: 1;
 }
 .journal[data-motion='compact'] .journey-atmosphere,
