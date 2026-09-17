@@ -1,5 +1,7 @@
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { responsiveImage } from '@/lib/responsive-image';
 import { AboutGallery } from './about-gallery';
 import type { Language } from '@/lib/locale';
 import { SpeciesCabinet } from './species-cabinet';
@@ -58,6 +60,15 @@ export function FieldJournal({
     document.documentElement.lang = zh ? 'zh-CN' : 'en';
     document.title = 'About Zeo';
   }, [zh]);
+  useEffect(() => {
+    const title = root.current?.querySelector<HTMLElement>('.hero-copy');
+    if (!title) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      title.dataset.visible = String(entry.isIntersecting);
+    });
+    observer.observe(title);
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -155,98 +166,90 @@ export function FieldJournal({
         };
         return;
       }
+      const heroCopy = hero?.querySelector<HTMLElement>('.hero-copy');
+      const heading = collection?.querySelector<HTMLElement>('.journey-collection-header');
+      const foreground = scenery?.querySelector<HTMLElement>('.scene-foreground');
       const specimens = [...el.querySelectorAll<HTMLElement>('.specimen')];
       const clamp = (n: number) => Math.max(0, Math.min(1, n));
       const ease = (n: number) => n * n * (3 - 2 * n);
-      let frame = 0;
+      let frame = 0, idleTimer = 0;
+      const top = (node: HTMLElement | null | undefined) => {
+        let value = 0;
+        for (let item = node; item; item = item.offsetParent as HTMLElement | null) value += item.offsetTop;
+        return value;
+      };
+      let viewport = 1, heroTop = 0, heroHeight = 1, aboutTop = 0, titleTop = 0;
+      let collectionTop = 0, closingTop = 0, journeyBottom = 0;
+      let positions: { node: HTMLElement; top: number }[] = [];
+      const changed = new Map<HTMLElement, Map<string, string>>();
+      const set = (node: HTMLElement | null | undefined, name: string, value: number) => {
+        if (!node) return;
+        const text = value.toFixed(4);
+        let values = changed.get(node);
+        if (!values) { values = new Map(); changed.set(node, values); }
+        if (values.get(name) === text) return;
+        values.set(name, text);
+        node.style.setProperty(name, text);
+      };
+      const setScrolling = (active: boolean) => {
+        if (document.documentElement.classList.contains('is-scrolling') === active) return;
+        document.documentElement.classList.toggle('is-scrolling', active);
+        document.dispatchEvent(new Event('zeooo-scroll-state'));
+      };
       const update = () => {
         frame = 0;
-        const viewport = window.innerHeight;
-        const heroRect = hero?.getBoundingClientRect();
-        const aboutRect = about?.getBoundingClientRect();
-        const collectionRect = collection?.getBoundingClientRect();
-        const titleTop = aboutTitle?.getBoundingClientRect().top ?? viewport;
-        const aboutWash = ease(clamp((viewport * 0.75 - titleTop) / (viewport * 0.6)));
-        const opening = clamp(
-          -(heroRect?.top ?? 0) / (heroRect?.height || viewport),
-        );
-        const encounter = clamp(
-          (viewport * 0.92 - (collectionRect?.top ?? viewport)) /
-            (viewport * 0.9),
-        );
-        // Let the paper wash build across a longer scroll distance than the title.
-        const wash = ease(clamp(
-          (viewport * 0.95 - (collectionRect?.top ?? viewport)) / (viewport * 1.5),
-        ));
-        const entering = ease(
-          clamp(
-            (viewport * 0.86 - (aboutRect?.top ?? viewport)) /
-              (viewport * 0.66),
-          ),
-        );
-        const closingRect = closing?.getBoundingClientRect();
-        const journeyBottom = journey?.getBoundingClientRect().bottom ?? 0;
-        const height = document.documentElement.scrollHeight - viewport;
-        const specimenPositions = specimens.map((node) => ({
-          node,
-          naturalTop: node.getBoundingClientRect().top
-            - (1 - Number(node.style.getPropertyValue('--fish-enter') || 1)) * 30,
-        }));
-        el.style.setProperty('--opening-progress', String(opening));
-        el.style.setProperty('--encounter-progress', String(ease(encounter)));
-        el.style.setProperty('--about-enter', String(entering));
-        el.style.setProperty('--about-wash', String(aboutWash));
-        el.style.setProperty(
-          '--hero-ink',
-          String(1 - ease(clamp(opening / 0.62))),
-        );
-        const closingReveal = ease(clamp((viewport - (closingRect?.top ?? viewport)) / viewport));
-        el.style.setProperty('--closing-progress', String(closingReveal));
-        el.style.setProperty(
-          '--paper-wash',
-          String(
-            Math.min(
-              1,
-              (0.24 * aboutWash + 0.24 * wash) * (1 - closingReveal),
-            ),
-          ),
-        );
-        el.style.setProperty(
-          '--scroll-y',
-          `${Math.min(window.scrollY, 1100)}px`,
-        );
-        el.style.setProperty(
-          '--read-progress',
-          String(height > 0 ? clamp(window.scrollY / height) : 0),
-        );
-        scenery?.classList.toggle(
-          'scene-offscreen',
-          journeyBottom < 0 || (heroRect?.top ?? 0) > viewport,
-        );
-        specimenPositions.forEach(({ node, naturalTop }) => {
-          const reveal = ease(
-            clamp(
-              (viewport * 0.96 - naturalTop) / Math.min(190, viewport * 0.25),
-            ),
-          );
-          node.style.setProperty('--fish-enter', String(reveal));
-        });
+        const y = window.scrollY;
+        const aboutWash = ease(clamp((viewport * 0.75 - titleTop + y) / (viewport * 0.6)));
+        const opening = clamp((y - heroTop) / heroHeight);
+        const encounter = ease(clamp((viewport * 0.92 - collectionTop + y) / (viewport * 0.9)));
+        const wash = ease(clamp((viewport * 0.95 - collectionTop + y) / (viewport * 1.5)));
+        const entering = ease(clamp((viewport * 0.86 - aboutTop + y) / (viewport * 0.66)));
+        const closingReveal = ease(clamp((viewport - closingTop + y) / viewport));
+        // Only the layers using each value are invalidated, never the whole journal.
+        set(heroCopy, '--opening-progress', opening);
+        set(heroCopy, '--hero-ink', 1 - ease(clamp(opening / 0.62)));
+        set(foreground, '--opening-progress', opening);
+        set(about, '--about-enter', entering);
+        set(about, '--encounter-progress', encounter);
+        set(heading, '--encounter-progress', encounter);
+        set(scenery, '--about-wash', aboutWash);
+        set(scenery, '--encounter-progress', encounter);
+        set(scenery, '--paper-wash', Math.min(1, (0.24 * aboutWash + 0.24 * wash) * (1 - closingReveal)));
+        set(closing, '--closing-progress', closingReveal);
+        scenery?.classList.toggle('scene-offscreen', journeyBottom - y < 0 || heroTop - y > viewport);
+        for (const item of positions) {
+          set(item.node, '--fish-enter', ease(clamp((viewport * 0.96 - item.top + y) / Math.min(190, viewport * 0.25))));
+        }
+      };
+      const measure = () => {
+        viewport = window.innerHeight;
+        heroTop = top(hero); heroHeight = hero?.offsetHeight || viewport;
+        aboutTop = top(about); titleTop = top(aboutTitle);
+        collectionTop = top(collection); closingTop = top(closing);
+        journeyBottom = top(journey) + (journey?.offsetHeight || 0);
+        positions = specimens.map(node => ({ node, top: top(node) }));
+        if (!frame) frame = requestAnimationFrame(update);
       };
       const onScroll = () => {
-        if (!frame) frame = window.requestAnimationFrame(update);
+        if (!frame) frame = requestAnimationFrame(update);
+        setScrolling(true);
+        clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(() => setScrolling(false), 160);
       };
-      const resizeObserver = new ResizeObserver(onScroll);
-      if (about) resizeObserver.observe(about);
-      if (hero) resizeObserver.observe(hero);
-      update();
+      const resizeObserver = new ResizeObserver(measure);
+      [hero, about, collection, closing].forEach(node => { if (node) resizeObserver.observe(node); });
+      measure();
       window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('resize', measure, { passive: true });
       dispose = () => {
         observer.disconnect();
         resizeObserver.disconnect();
         window.removeEventListener('scroll', onScroll);
-        window.removeEventListener('resize', onScroll);
+        window.removeEventListener('resize', measure);
         cancelAnimationFrame(frame);
+        clearTimeout(idleTimer);
+        setScrolling(false);
+        for (const [node, values] of changed) for (const name of values.keys()) node.style.removeProperty(name);
       };
     }
     setup();
@@ -421,7 +424,7 @@ export function FieldJournal({
             >
               <img
                 className="drift-entry-art"
-                src="/images/river-studio-entry.webp"
+                {...responsiveImage('/images/river-studio-entry.webp', '(max-width: 760px) 90vw, 1000px')}
                 width={1536}
                 height={1024}
                 alt=""

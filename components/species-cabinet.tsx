@@ -1,3 +1,4 @@
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
 'use client';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -8,6 +9,7 @@ import {
   DialogDescription,
   DialogClose,
 } from '@/components/ui/dialog';
+import { responsiveImage } from '@/lib/responsive-image';
 import { FishIcon } from '@/components/fish-icon';
 import { FishPrint } from '@/components/fish-print';
 import { CatchCorner } from '@/components/catch-corner';
@@ -31,6 +33,8 @@ function CatchCard({
   const [frame, setFrame] = useState(0);
   const [imageFailed, setImageFailed] = useState(false);
   const [open, setOpen] = useState(false);
+  const [previewRequested, setPreviewRequested] = useState(false);
+  const [previewReady, setPreviewReady] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [canHover, setCanHover] = useState(false);
@@ -48,7 +52,7 @@ function CatchCard({
   const origin = useRef<DOMRect | null>(null);
   const pointer = useRef('keyboard');
   const hasPreview = Boolean(fish.photos[0]) && !previewFailed;
-  const flipped = hasPreview && canHover && (hovered || focused);
+  const flipped = hasPreview && previewReady && canHover && (hovered || focused);
   useLayoutEffect(() => {
     if (!open || !origin.current
       || window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 760px), (pointer: coarse)').matches
@@ -103,10 +107,10 @@ function CatchCard({
               className="fish-record-card"
               onPointerDown={(event) => { pointer.current = event.pointerType; }}
               onPointerEnter={(event) => {
-                if (canHover && event.pointerType === 'mouse') { pointer.current = 'mouse'; setHovered(true); }
+                if (canHover && event.pointerType === 'mouse') { pointer.current = 'mouse'; setPreviewRequested(true); setHovered(true); }
               }}
               onPointerLeave={() => setHovered(false)}
-              onFocus={() => { if (pointer.current === 'keyboard') setFocused(true); }}
+              onFocus={() => { if (pointer.current === 'keyboard') { setPreviewRequested(true); setFocused(true); } }}
               onBlur={() => { setFocused(false); }}
               onKeyDown={(event) => {
                 pointer.current = 'keyboard';
@@ -132,15 +136,18 @@ function CatchCard({
               {hasPreview && canHover && (
                 <span className="fish-flip-face fish-flip-back">
                   <FieldFrame className="fish-photo-print">
-                    <img
-                      src={fish.photos[0]}
+                    {previewRequested && <img
+                      {...responsiveImage(fish.photos[0], '380px')}
                       alt=""
                       width={previewSize?.width}
                       height={previewSize?.height}
-                      loading="lazy"
+                      loading="eager"
+                      fetchPriority="low"
+                      onLoad={() => setPreviewReady(true)}
                       draggable={false}
                       onError={() => setPreviewFailed(true)}
-                    />
+                      decoding="async"
+                    />}
                     <CatchCorner date={fish.date} place={fish.place} />
                   </FieldFrame>
                 </span>
@@ -161,7 +168,7 @@ function CatchCard({
             {fish.photos.length > 0 && !imageFailed ? (
               <img
                 key={fish.photos[frame]}
-                src={fish.photos[frame]}
+                {...responsiveImage(fish.photos[frame], '(max-width: 760px) 92vw, 75vw')}
                 alt={t(
                   `${fish.name}，Zeooo 的鱼获照片${frame + 1}`,
                   `${fish.name}, Zeooo’s catch, photo ${frame + 1}`,

@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "npm run geo:prepare && vinext build && node scripts/check-fonts.mjs",
+    "build": "npm run geo:prepare && vinext build --precompress && node scripts/check-fonts.mjs",
+    "assets:images": "node scripts/prepare-images.mjs",
     "start": "node --import ./scripts/geo-env.mjs node_modules/vinext/dist/cli.js start",
     "lint": "oxlint",
     "format": "oxfmt",
@@ -52,6 +53,7 @@
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
+    "sharp": "0.35.4",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vite": "8.0.13",

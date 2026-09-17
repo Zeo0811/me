@@ -99,3 +99,5 @@ The closing landscape reuses the opening scene and local-time palette. Visible f
 ## 网站自带字体
 
 中文使用 Noto Serif SC，英文使用 Libre Baskerville（含真正斜体）。字体通过固定版本的 Fontsource 依赖随网站构建，同域加载，不要求访客安装字体，也不请求 Google Fonts CDN。中文按 Unicode 范围分片加载；font-display: swap 避免等待字体时文字消失。字体许可见 licenses/。
+
+2026-09-17 性能优化：字体保留原字形、字重和字号，仅裁掉网站未用字；图片使用预生成的响应式 WebP 和带版本的长期缓存；鱼获原图按需请求。资源维护、验证范围见 [docs/performance.md](docs/performance.md)。

@@ -28,3 +28,21 @@ for (const font of ['noto-serif-sc-', 'libre-baskerville-latin-400-normal', 'lib
   assert([...urls].some((url) => url.includes(font)), `Missing bundled font: ${font}`);
 }
 console.log(`Verified ${urls.size} self-hosted font assets.`);
+
+// Fail loudly when future copy adds a Chinese glyph absent from the subset.
+const coverage = new Set(JSON.parse(await readFile('app/fonts/coverage.json', 'utf8')));
+const missing = new Set();
+async function checkCopy(directory) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) await checkCopy(path);
+    else if (/\.tsx?$/.test(path)) {
+      for (const character of await readFile(path, 'utf8')) {
+        const code = character.codePointAt(0);
+        if (code >= 0x3400 && code <= 0x9fff && !coverage.has(code)) missing.add(character);
+      }
+    }
+  }
+}
+for (const directory of ['app', 'components', 'content']) await checkCopy(directory);
+assert.equal(missing.size, 0, `Regenerate fonts with scripts/prepare-fonts.py: missing ${[...missing].join('')}`);

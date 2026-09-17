@@ -1,4 +1,5 @@
-import Image from 'next/image';
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
+import { responsiveImage } from '@/lib/responsive-image';
 import { SceneCamera } from './scene-camera';
 import { AnglerCast } from './angler-cast';
 import type { CSSProperties } from 'react';
@@ -12,9 +13,8 @@ const stars = [
   [79, 35, 1.5], [91, 40, 1], [4, 47, 1], [62, 43, 1], [97, 8, 1],
 ];
 // Independent sky, sun, terrain, water highlights and transparent foreground.
-export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }: {
+export function RiverLandscape({ scene, priority = true }: {
   scene: DayScene;
-  idPrefix?: string;
   priority?: boolean;
 }) {
   const terrain = sceneAssets[scene];
@@ -36,59 +36,26 @@ export function RiverLandscape({ scene, idPrefix = 'opening', priority = true }:
         <span />
       </div>
       <div className="scene-terrain">
-        <Image
-          unoptimized
-          src={terrain}
+        <img
+          {...responsiveImage(terrain, '(max-width: 760px) 150vw, 100vw')}
           alt=""
           width={1536}
           height={1024}
           fetchPriority={priority ? 'high' : 'auto'}
           loading={priority ? 'eager' : 'lazy'}
         />
-        <svg className="scene-current" viewBox="0 0 1536 1024" fill="none">
-          <defs>
-            <filter id={`${idPrefix}-water-light`}>
-              <feComponentTransfer>
-                <feFuncR type="linear" slope="1.16" />
-                <feFuncG type="linear" slope="1.13" />
-                <feFuncB type="linear" slope="1.09" />
-              </feComponentTransfer>
-            </filter>
-            <filter id={`${idPrefix}-water-soft-edge`}>
-              <feGaussianBlur stdDeviation="9" />
-            </filter>
-            <mask id={`${idPrefix}-water-reflection-area`}>
-              <g filter={`url(#${idPrefix}-water-soft-edge)`} fill="white">
-                <path d="M1260 446H1536V1024H1270L1120 920 1290 850 1170 792 1280 729 1330 664 1450 606 1370 548 1310 505Z" />
-                <path
-                  d="M350 529C590 535 441 557 529 581S652 620 460 657 192 704 355 741 721 753 828 808 971 887 1190 944"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="24"
-                />
-              </g>
-            </mask>
-          </defs>
-          <g mask={`url(#${idPrefix}-water-reflection-area)`}>
-            <image
-              className="water-reflection"
-              href={terrain}
-              width="1536"
-              height="1024"
-              filter={`url(#${idPrefix}-water-light)`}
-            />
-          </g>
-        </svg>
+        <div className="scene-current" style={{
+          backgroundImage: `url("${responsiveImage(terrain.replace(/([^/]+)$/, 'reflection-$1'), '100vw').src}")`,
+        }} />
         <AnglerCast />
       </div>
       <div className="scene-foreground">
-        <Image
-          unoptimized
-          src="/images/hero/foreground.webp"
+        <img
+          {...responsiveImage('/images/hero/foreground.webp', '(max-width: 760px) 85vw, 64vw')}
           alt=""
           width={1536}
           height={1024}
-          fetchPriority={priority ? 'high' : 'auto'}
+          fetchPriority="low"
           loading={priority ? 'eager' : 'lazy'}
         />
       </div>

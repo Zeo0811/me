@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { requestLanguage } from '@/lib/request-language';
 import '@fontsource/libre-baskerville/latin-400.css';
 import '@fontsource/libre-baskerville/latin-400-italic.css';
-import '@fontsource-variable/noto-serif-sc/wght.css';
+import './site-fonts.css';
 import './globals.css';
+import './materials.css';
 export async function generateMetadata(): Promise<Metadata> {
   const language = await requestLanguage();
   return {

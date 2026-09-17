@@ -1,7 +1,8 @@
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import { responsiveImage } from '@/lib/responsive-image';
 import { FieldFrame } from './field-frame';
 import type { Language } from '@/lib/locale';
 const photos = [
@@ -36,16 +37,10 @@ export function AboutGallery({ language }: { language: Language }) {
   const zh = language === 'zh';
 
   return (
-    <div
+    <section
       className="portrait about-gallery"
-      role="group"
       aria-label={zh ? '水边的三张照片' : 'Three photographs by the water'}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          setExpanded(null);
-          (event.target as HTMLElement).blur();
-        }
-      }}
+
     >
       <div className="photo-wall">
         {photos.map((photo) => (
@@ -55,23 +50,29 @@ export function AboutGallery({ language }: { language: Language }) {
             className={`journal-photo journal-photo-${photo.position}`}
             aria-label={`${zh ? photo.zh : photo.en} · ${zh ? '放大照片' : 'Enlarge photograph'}`}
             aria-pressed={expanded === photo.src}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setExpanded(null);
+                event.currentTarget.blur();
+              }
+            }}
             onClick={() => setExpanded(expanded === photo.src ? null : photo.src)}
             onBlur={() => setExpanded(null)}
           >
             <FieldFrame className="portrait-frame">
-              <Image
-                unoptimized
-                src={photo.src}
+              <img
+                {...responsiveImage(photo.src, photo.position === 'lower' ? '(max-width: 760px) 88vw, 430px' : '(max-width: 760px) 42vw, 215px')}
                 alt={zh ? photo.zh : photo.en}
                 width={photo.width}
                 height={photo.height}
                 loading="lazy"
+                decoding="async"
                 draggable={false}
               />
             </FieldFrame>
           </button>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

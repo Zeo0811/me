@@ -1,7 +1,10 @@
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import icons from '@/content/fish-icons.json';
+import { responsiveImage } from '@/lib/responsive-image';
+import { animateFish } from '@/lib/animation-clock';
 
 /** Animate the existing illustration, keeping its head steady and bending toward the tail. */
 export function FishSwimmer({ id }: { id: string }) {
@@ -23,11 +26,11 @@ export function FishSwimmer({ id }: { id: string }) {
     const context = surface.getContext('2d');
     if (!context) return;
     let disposed = false;
-    let frame = 0;
+    let stop = () => {};
     let visible = false;
     let last = 0;
     let pixelRatio = 1;
-    const hash = [...id].reduce((value, letter) => Math.imul(value ^ letter.charCodeAt(0), 16777619), 2166136261) >>> 0;
+    const hash = id.split('').reduce((value, letter) => Math.imul(value ^ letter.charCodeAt(0), 16777619), 2166136261) >>> 0;
     const variation = (hash % 997) / 997;
     const phase = ((hash >>> 10) % 991) / 991 * Math.PI * 2;
     const tailSpeed = 1.35 + variation * 0.9;
@@ -38,17 +41,25 @@ export function FishSwimmer({ id }: { id: string }) {
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
     const compact = matchMedia('(max-width: 760px), (pointer: coarse)');
     const flip = surface.closest<HTMLElement>('.fish-flip');
-    let crop = { x: 0, y: 0, w: source.naturalWidth, h: source.naturalHeight };
+    // srcset changes naturalWidth with device density, whereas the nine-argument
+    // drawImage crops physical pixels. Normalize with the uncropped overload first.
+    const raster = document.createElement('canvas');
+    raster.width = icon.width;
+    raster.height = icon.height;
+    raster.getContext('2d')?.drawImage(source, 0, 0, raster.width, raster.height);
+    const bitmap = document.createElement('canvas');
+    const painter = bitmap.getContext('2d');
+    let crop = { x: 0, y: 0, w: raster.width, h: raster.height };
 
     // Normalize transparent padding across the existing square and landscape assets.
     try {
       const sample = document.createElement('canvas');
-      const sampleScale = Math.min(1, 128 / Math.max(source.naturalWidth, source.naturalHeight));
-      sample.width = Math.max(1, Math.round(source.naturalWidth * sampleScale));
-      sample.height = Math.max(1, Math.round(source.naturalHeight * sampleScale));
+      const sampleScale = Math.min(1, 128 / Math.max(raster.width, raster.height));
+      sample.width = Math.max(1, Math.round(raster.width * sampleScale));
+      sample.height = Math.max(1, Math.round(raster.height * sampleScale));
       const sampler = sample.getContext('2d', { willReadFrequently: true });
       if (sampler) {
-        sampler.drawImage(source, 0, 0, sample.width, sample.height);
+        sampler.drawImage(raster, 0, 0, sample.width, sample.height);
         const pixels = sampler.getImageData(0, 0, sample.width, sample.height).data;
         let left = sample.width, right = -1, top = sample.height, bottom = -1;
         for (let y = 0; y < sample.height; y++) {
@@ -60,7 +71,7 @@ export function FishSwimmer({ id }: { id: string }) {
           }
         }
         if (right >= left && bottom >= top) {
-          const sx = source.naturalWidth / sample.width, sy = source.naturalHeight / sample.height;
+          const sx = raster.width / sample.width, sy = raster.height / sample.height;
           crop = { x: left * sx, y: top * sy, w: (right - left + 1) * sx, h: (bottom - top + 1) * sy };
         }
       }
@@ -77,11 +88,11 @@ export function FishSwimmer({ id }: { id: string }) {
       const x = (w - fw) / 2 + (still ? 0 : Math.sin(time * (0.38 + variation * 0.16) + phase) * w * 0.007);
       const y = (h - fh) / 2 + (still ? 0 : Math.sin(time * (0.48 + variation * 0.2) - phase) * h * 0.009);
       if (still) {
-        context.drawImage(source, crop.x, crop.y, crop.w, crop.h, x, y, fw, fh);
+        context.drawImage(bitmap, x, y, fw, fh);
         return;
       }
       // Small overlapping strips form a continuous body bend; motion grows near the tail.
-      const strips = compact.matches ? 24 : 96;
+      const strips = compact.matches ? 18 : 48;
       // A visible but restrained tail correction even during the quieter phase.
       // Bound amplitude in CSS pixels so a small mobile fish still feels alive.
       const amplitude = Math.min(4 * pixelRatio, Math.max(2.2 * pixelRatio, fh * 0.028));
@@ -90,35 +101,35 @@ export function FishSwimmer({ id }: { id: string }) {
         const u = i / strips;
         const tailWeight = Math.pow(Math.max(0, (u - 0.58) / 0.42), 2);
         const sway = Math.sin(time * tailSpeed - u * 3.4 + phase) * tailWeight * amplitude * activity;
-        const sw = Math.min(crop.w - u * crop.w, crop.w / strips + 0.6 / scale);
-        context.drawImage(source, crop.x + u * crop.w, crop.y, sw, crop.h,
-          x + u * fw, y + sway, sw * scale, fh);
+        const sw = Math.min(bitmap.width - u * bitmap.width, bitmap.width / strips + 0.6);
+        context.drawImage(bitmap, u * bitmap.width, 0, sw, bitmap.height,
+          x + u * fw, y + sway, sw * fw / bitmap.width, fh);
       }
     }
     function tick(now: number) {
       if (disposed) return;
-      if (!last || now - last >= 1000 / (compact.matches ? 15 : 30)) {
-        time += last ? Math.min((now - last) / 1000, 0.08) : 0;
-        last = now;
-        draw();
-      }
-      frame = requestAnimationFrame(tick);
+      time += last ? Math.min((now - last) / 1000, 0.12) : 0;
+      last = now;
+      draw();
     }
     function sync() {
-      cancelAnimationFrame(frame);
-      frame = 0;
+      stop();
       last = 0;
       if (disposed) return;
       if (preference.matches) draw(true);
       else if (visible && !document.hidden && flip?.dataset.flipped !== 'true'
-        && !(compact.matches && document.documentElement.classList.contains('is-scrolling'))) frame = requestAnimationFrame(tick);
+        && !document.documentElement.classList.contains('is-scrolling')) stop = animateFish(tick);
     }
     function resize() {
-      if (!surface) return;
+      if (!surface || !source) return;
       const ratio = Math.min(devicePixelRatio || 1, compact.matches ? 1.25 : 2);
       pixelRatio = ratio;
       surface.width = Math.max(1, Math.round(surface.clientWidth * ratio));
       surface.height = Math.max(1, Math.round(surface.clientHeight * ratio));
+      const scale = Math.min(surface.width * 0.88 * sizeBoost / crop.w, surface.height * 0.78 * sizeBoost / crop.h);
+      bitmap.width = Math.max(1, Math.ceil(crop.w * scale));
+      bitmap.height = Math.max(1, Math.ceil(crop.h * scale));
+      painter?.drawImage(raster, crop.x, crop.y, crop.w, crop.h, 0, 0, bitmap.width, bitmap.height);
       draw(preference.matches);
       setReady(true);
     }
@@ -136,19 +147,19 @@ export function FishSwimmer({ id }: { id: string }) {
     resize();
     return () => {
       disposed = true;
-      cancelAnimationFrame(frame);
+      stop();
       resizeObserver.disconnect(); visibilityObserver.disconnect(); flipObserver.disconnect();
       compact.removeEventListener('change', onModeChange);
       document.removeEventListener('zeooo-scroll-state', sync);
       preference.removeEventListener('change', sync);
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [loaded, id]);
+  }, [loaded, id, icon]);
 
   if (!icon) return null;
   return (
     <span className="fish-swimmer" data-ready={ready} aria-hidden="true">
-      <img ref={photo} src={icon.src} width={icon.width} height={icon.height} alt=""
+      <img ref={photo} {...responsiveImage(icon.src, '(max-width: 760px) 40vw, 300px')} width={icon.width} height={icon.height} alt=""
         loading="lazy" decoding="async" draggable={false} onLoad={() => setLoaded(true)} />
       <canvas ref={canvas} />
     </span>

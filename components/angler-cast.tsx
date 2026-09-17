@@ -1,6 +1,7 @@
+/* oxlint-disable next/no-img-element -- Images use prebuilt responsive srcsets with hashed cache URLs. */
 'use client';
 
-import Image from 'next/image';
+import { responsiveImage } from '@/lib/responsive-image';
 import { useEffect, useRef } from 'react';
 
 const frames = ['zeo-angler', 'zeo-cast-lift', 'zeo-cast-backcast', 'zeo-cast-forward', 'zeo-cast-lookback-v2'];
@@ -68,16 +69,16 @@ export function AnglerCast() {
   }, []);
 
   return <div className="scene-angler" ref={root} data-cast-frame="0">
-    {frames.map((name, index) => <Image
+    {frames.map((name, index) => <img
       key={name}
       className="angler-cel"
       data-cel={index}
-      unoptimized
-      src={`/images/hero/${name}.webp`}
+      {...responsiveImage(`/images/hero/${name}.webp`, '90px')}
       alt=""
       width={640}
       height={640}
       loading="eager"
+      decoding="async"
       fetchPriority="low"
     />)}
   </div>;
