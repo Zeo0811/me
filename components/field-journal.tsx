@@ -208,7 +208,12 @@ export function FieldJournal({
         // Only the layers using each value are invalidated, never the whole journal.
         set(heroCopy, '--opening-progress', opening);
         set(heroCopy, '--hero-ink', 1 - ease(clamp(opening / 0.62)));
-        set(foreground, '--opening-progress', opening);
+        // Do not inherit a changing custom property through the filtered image:
+        // only the already-composited foreground frame needs to fade.
+        if (foreground) {
+          const opacity = String(Math.max(0, 1 - opening * 2));
+          if (foreground.style.opacity !== opacity) foreground.style.opacity = opacity;
+        }
         set(about, '--about-enter', entering);
         set(about, '--encounter-progress', encounter);
         set(heading, '--encounter-progress', encounter);
@@ -249,6 +254,7 @@ export function FieldJournal({
         cancelAnimationFrame(frame);
         clearTimeout(idleTimer);
         setScrolling(false);
+        foreground?.style.removeProperty('opacity');
         for (const [node, values] of changed) for (const name of values.keys()) node.style.removeProperty(name);
       };
     }

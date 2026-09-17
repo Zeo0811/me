@@ -59,3 +59,22 @@ environment and run `python scripts/prepare-fonts.py` from this directory. Commi
 `app/fonts` and `app/site-fonts.css`. A normal Railway build needs no Python;
 `scripts/check-fonts.mjs` rejects missing Chinese glyphs instead of silently
 falling back to a different font.
+
+## Desktop Retina scroll follow-up
+
+The first compositing patch did not resolve the reported M1 Chrome flicker. A
+1440×960, DPR 2 Chromium layer trace found 252 paints on the large foreground
+and continuous text-shadow/letter-light paints during a six-second scroll.
+
+- Foreground fading now changes its parent opacity directly. The filtered grass
+  image has a separate, persistent transform layer for wind movement; a changing
+  inherited scroll variable no longer invalidates the image every frame.
+- Cloud/light and wash layers keep their compositing hints across scroll pauses.
+- Title shimmer holds its current frame during scrolling, then resumes. Font
+  assets, font family, size and weight are unchanged.
+- The small casting layer is paint-contained; its five frames continue during
+  scrolling.
+
+The same diagnostic dropped from 1,594 paint events to 59 with no paints on the
+large foreground during that scroll. Counts vary with scheduling; this is a
+Chromium diagnostic, not a claim of reproducing the specific M1 GPU artifact.
