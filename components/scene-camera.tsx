@@ -38,9 +38,13 @@ export function SceneCamera({ children }: { children: ReactNode }) {
       if (!node || !hero || !terrain) return;
       cancelAnimationFrame(frame);
       frame = 0;
-      node.style.removeProperty('transform');
-      title?.style.removeProperty('opacity');
-      if (reduced.matches) return;
+      if (reduced.matches) {
+        node.style.removeProperty('transform');
+        title?.style.removeProperty('opacity');
+        return;
+      }
+      // offset geometry is already untransformed. Clearing transform here can
+      // drop Chrome's composited landscape layer between resize and scroll work.
       // Geometry is read only on resize, never during a scroll frame.
       const w = node.clientWidth, h = node.clientHeight;
       const x = terrain.offsetLeft + terrain.offsetWidth * 0.425;

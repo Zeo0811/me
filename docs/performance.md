@@ -26,6 +26,10 @@ weights, scene selection and 1.8-second casting sequence.
   full-screen SVG filter work on each pulse. Offscreen title animation pauses.
 - Generated media goes through Vite asset imports and receives immutable hashed
   URLs. Production builds precompress CSS and JS.
+- Chrome scroll follow-up: keep the sticky landscape and camera in stable
+  composited layers, with explicit nonnegative stacking below the content. Resize
+  measurements no longer clear the camera transform. Background light/wind
+  animations hold their current frame during scrolling; casting continues.
 
 ## Validation
 
