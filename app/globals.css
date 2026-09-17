@@ -103,10 +103,9 @@ a:focus-visible {
   align-items: center;
   width: max-content;
   color: #30483c;
-  background: rgba(245, 241, 226, 0.94);
-  border: 1px solid rgba(70, 78, 57, 0.15);
-  border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(30, 43, 34, 0.06);
+}
+.journal[data-scene='night'] .margin-tools {
+  color: var(--about-ink, #f0eddf);
 }
 .language-switch {
   display: flex;
@@ -124,11 +123,10 @@ a:focus-visible {
   min-height: 36px;
   opacity: 0.75;
   position: relative;
-  transition: opacity 180ms ease, background-color 180ms ease;
+  transition: opacity 180ms ease;
 }
 .language-switch button:hover {
   opacity: 1;
-  background: rgba(48, 72, 60, 0.05);
 }
 .language-switch button:focus-visible {
   outline-offset: -4px;
@@ -136,17 +134,9 @@ a:focus-visible {
 .language-switch button[aria-pressed='true'] {
   opacity: 1;
 }
-.language-switch button[aria-pressed='true']:after {
-  content: '';
-  position: absolute;
-  bottom: 3px;
-  left: 12px;
-  right: 12px;
-  height: 1px;
-  background: var(--rust);
-}
 .language-switch > span {
-  color: #a7a58f;
+  color: inherit;
+  opacity: 0.45;
   font-style: italic;
 }
 .margin-label {
