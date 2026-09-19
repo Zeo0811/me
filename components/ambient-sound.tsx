@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const TARGET_VOLUME = 0.075;
+const TARGET_VOLUME = 0.28;
 
 export function AmbientSound({ zh }: { zh: boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -83,7 +83,7 @@ export function AmbientSound({ zh }: { zh: boolean }) {
     <div className="ambient-sound">
       {/* Background ambience has no spoken content that requires captions. */}
       {/* oxlint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio ref={audioRef} src="/audio/river-ambience.mp3" loop preload="auto" playsInline />
+      <audio ref={audioRef} src="/audio/forest-ambience.mp3" loop preload="auto" playsInline />
       <button
         type="button"
         className="ambient-sound-toggle"
