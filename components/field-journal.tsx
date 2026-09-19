@@ -12,6 +12,7 @@ import { profileUrl } from '@/content/journal';
 import { englishFishNames } from '@/content/journal-en';
 import { wishlist } from '@/content/wishlist';
 import { preferredTimeZone, sceneAt, validTimeZone, type DayScene } from '@/lib/daylight';
+import { AmbientSound } from './ambient-sound';
 
 export function FieldJournal({
   initialLanguage,
@@ -285,6 +286,7 @@ export function FieldJournal({
         className="margin-tools"
         aria-label={t('阅读设置', 'Reading preferences')}
       >
+        <AmbientSound zh={zh} />
         <fieldset className="language-switch" aria-label="Language / 语言">
           <button
             type="button"

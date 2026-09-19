@@ -100,9 +100,63 @@ a:focus-visible {
   right: calc(env(safe-area-inset-right, 0px) + 16px);
   z-index: 30;
   display: flex;
+  gap: 8px;
   align-items: center;
   width: max-content;
   color: #30483c;
+}
+.ambient-sound {
+  display: flex;
+  align-items: center;
+}
+.ambient-sound-toggle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  opacity: 0.72;
+  transition: opacity 180ms ease;
+}
+.ambient-sound-toggle:hover,
+.ambient-sound-toggle[aria-pressed='true'] {
+  opacity: 1;
+}
+.ambient-sound-toggle:focus-visible {
+  outline-offset: -4px;
+}
+.ambient-sound-bars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+.ambient-sound-bars i {
+  display: block;
+  width: 1px;
+  height: 4px;
+  border-radius: 1px;
+  background: currentColor;
+  transform-origin: center;
+}
+.ambient-sound-toggle[aria-pressed='true'] .ambient-sound-bars i {
+  animation: ambient-bar 1.8s ease-in-out infinite;
+}
+.ambient-sound-toggle[aria-pressed='true'] .ambient-sound-bars i:nth-child(2) {
+  animation-delay: -0.65s;
+}
+.ambient-sound-toggle[aria-pressed='true'] .ambient-sound-bars i:nth-child(3) {
+  animation-delay: -1.15s;
+}
+@keyframes ambient-bar {
+  0%, 100% { transform: scaleY(0.65); }
+  50% { transform: scaleY(2.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-sound-bars i { animation: none !important; }
 }
 .journal[data-scene='night'] .margin-tools {
   color: var(--about-ink, #f0eddf);
