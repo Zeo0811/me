@@ -103,6 +103,8 @@ Use case: scientific-educational. Asset type: individual realistic miniature 3D 
 
 ## mandarin — 斑鳜 Siniperca scherzeri
 
+2026-09-19 按用户实际鱼获照片重绘。新图优先保留鱼获中的黄橄榄底色、背部深色鞍斑、侧线环状豹纹、斑点鳍和修长体型，不再使用旧图标均匀小圆点的表现。补充参考 [FishBase 形态摘要](https://www.fishbase.se/summary/Siniperca-scherzeri.html) 与用户给出的鱼获照片。
+
 大头大口、下颌突出、许多独立细圆暗斑、前棘后软的连续背鳍、扇形圆尾；不可用普通鳜的大块不规则暗斑。
 
 - 来源页：https://bwg.shou.edu.cn/2020/0709/c15622a272662/page.htm

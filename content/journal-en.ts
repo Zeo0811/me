@@ -16,6 +16,7 @@ export const englishFishNames: Record<string, string> = {
   ayu: 'Ayu sweetfish',
   bamboo: 'Spinibarbus denticulatus',
   yellowcheek: 'Yellowcheek',
+  steelhead: 'Steelhead',
 };
 const translations: Record<
   string,
@@ -23,7 +24,7 @@ const translations: Record<
 > = {
   redeye: {
     caption: 'An encounter in Chongqing.',
-    locationBasis: 'Species, unlock date August 15, 2026, and Chongqing location confirmed by Zeo. Photos ordered IMG_5103, IMG_5082, IMG_5073.',
+    locationBasis: 'Species, unlock date August 15, 2026, and Chongqing location confirmed by Zeo. Photos ordered IMG_5082, IMG_5103, IMG_5073.',
   },
   char: {
     caption: 'A whitespotted char in the stream.',

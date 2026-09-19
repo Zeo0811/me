@@ -5,4 +5,5 @@ export const wishlist = [
   { id: 'ayu', name: '香鱼', largeSpecimen: false },
   { id: 'bamboo', name: '青竹鲤', largeSpecimen: false },
   { id: 'yellowcheek', name: '鱤鱼', largeSpecimen: false },
+  { id: 'steelhead', name: '钢头鳟', largeSpecimen: false },
 ] as const;

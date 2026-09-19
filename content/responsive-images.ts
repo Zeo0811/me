@@ -102,8 +102,8 @@ import asset99 from '../assets/journal/fish-icons-gudgeon-320.22dad287f1c8.webp?
 import asset100 from '../assets/journal/fish-icons-gudgeon-640.017e8103731e.webp?url';
 import asset101 from '../assets/journal/fish-icons-lenok-320.2939fe2e1508.webp?url';
 import asset102 from '../assets/journal/fish-icons-lenok-640.c4fff93a41e4.webp?url';
-import asset103 from '../assets/journal/fish-icons-mandarin-320.ac18dabc8d87.webp?url';
-import asset104 from '../assets/journal/fish-icons-mandarin-640.d27992e21eff.webp?url';
+import asset103 from '../assets/journal/fish-icons-mandarin-320.782492e36378.webp?url';
+import asset104 from '../assets/journal/fish-icons-mandarin-640.db036e0519ef.webp?url';
 import asset105 from '../assets/journal/fish-icons-prenanti-v2-320.bca4b37de4e4.webp?url';
 import asset106 from '../assets/journal/fish-icons-prenanti-v2-640.4dd542ed6dca.webp?url';
 import asset107 from '../assets/journal/fish-icons-prenanti-320.add7b6181bc2.webp?url';
@@ -112,17 +112,19 @@ import asset109 from '../assets/journal/fish-icons-redeye-320.f27e47a3f7eb.webp?
 import asset110 from '../assets/journal/fish-icons-redeye-640.313130acdce2.webp?url';
 import asset111 from '../assets/journal/fish-icons-schizothorax-320.e2b97f589d87.webp?url';
 import asset112 from '../assets/journal/fish-icons-schizothorax-640.d30ac279c3c4.webp?url';
-import asset113 from '../assets/journal/fish-icons-whitearmor-320.2fca021e2039.webp?url';
-import asset114 from '../assets/journal/fish-icons-whitearmor-640.e9ddbfbf963a.webp?url';
-import asset115 from '../assets/journal/fish-icons-yellowcheek-320.be7c063f64e9.webp?url';
-import asset116 from '../assets/journal/fish-icons-yellowcheek-640.54111e950b65.webp?url';
-import asset117 from '../assets/journal/simulator-640.2b545a22e8bf.webp?url';
-import asset118 from '../assets/journal/simulator-1024.212d19201c9a.webp?url';
-import asset119 from '../assets/journal/simulator-1536.408be148eaf6.webp?url';
-import asset120 from '../assets/journal/reflection-terrain.c466a41e1c42.webp?url';
-import asset121 from '../assets/journal/reflection-day-terrain.90ac8f0e7f99.webp?url';
-import asset122 from '../assets/journal/reflection-dawn-terrain.d9cf1a5390ba.webp?url';
-import asset123 from '../assets/journal/reflection-night-terrain.3cedcd9139e4.webp?url';
+import asset113 from '../assets/journal/fish-icons-steelhead-320.2e844b72c271.webp?url';
+import asset114 from '../assets/journal/fish-icons-steelhead-640.c3842c91713a.webp?url';
+import asset115 from '../assets/journal/fish-icons-whitearmor-320.2fca021e2039.webp?url';
+import asset116 from '../assets/journal/fish-icons-whitearmor-640.e9ddbfbf963a.webp?url';
+import asset117 from '../assets/journal/fish-icons-yellowcheek-320.be7c063f64e9.webp?url';
+import asset118 from '../assets/journal/fish-icons-yellowcheek-640.54111e950b65.webp?url';
+import asset119 from '../assets/journal/simulator-640.2b545a22e8bf.webp?url';
+import asset120 from '../assets/journal/simulator-1024.212d19201c9a.webp?url';
+import asset121 from '../assets/journal/simulator-1536.408be148eaf6.webp?url';
+import asset122 from '../assets/journal/reflection-terrain.c466a41e1c42.webp?url';
+import asset123 from '../assets/journal/reflection-day-terrain.90ac8f0e7f99.webp?url';
+import asset124 from '../assets/journal/reflection-dawn-terrain.d9cf1a5390ba.webp?url';
+import asset125 from '../assets/journal/reflection-night-terrain.3cedcd9139e4.webp?url';
 const images = {
   "/images/about/catch-closeup.webp": {
     "width": 1600,
@@ -784,7 +786,7 @@ const images = {
   },
   "/images/fish-icons/mandarin.webp": {
     "width": 640,
-    "height": 640,
+    "height": 427,
     "variants": [
       {
         "width": 320,
@@ -852,7 +854,7 @@ const images = {
       }
     ]
   },
-  "/images/fish-icons/whitearmor.webp": {
+  "/images/fish-icons/steelhead.webp": {
     "width": 640,
     "height": 427,
     "variants": [
@@ -866,9 +868,9 @@ const images = {
       }
     ]
   },
-  "/images/fish-icons/yellowcheek.webp": {
+  "/images/fish-icons/whitearmor.webp": {
     "width": 640,
-    "height": 320,
+    "height": 427,
     "variants": [
       {
         "width": 320,
@@ -880,21 +882,35 @@ const images = {
       }
     ]
   },
+  "/images/fish-icons/yellowcheek.webp": {
+    "width": 640,
+    "height": 320,
+    "variants": [
+      {
+        "width": 320,
+        "src": asset117
+      },
+      {
+        "width": 640,
+        "src": asset118
+      }
+    ]
+  },
   "/images/river-studio-entry.webp": {
     "width": 1536,
     "height": 1024,
     "variants": [
       {
         "width": 640,
-        "src": asset117
+        "src": asset119
       },
       {
         "width": 1024,
-        "src": asset118
+        "src": asset120
       },
       {
         "width": 1536,
-        "src": asset119
+        "src": asset121
       }
     ]
   },
@@ -904,7 +920,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset120
+        "src": asset122
       }
     ]
   },
@@ -914,7 +930,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset121
+        "src": asset123
       }
     ]
   },
@@ -924,7 +940,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset122
+        "src": asset124
       }
     ]
   },
@@ -934,7 +950,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset123
+        "src": asset125
       }
     ]
   }

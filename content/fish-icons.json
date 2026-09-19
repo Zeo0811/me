@@ -32,7 +32,7 @@
   "mandarin": {
     "src": "/images/fish-icons/mandarin.webp",
     "width": 640,
-    "height": 640
+    "height": 427
   },
   "lenok": {
     "src": "/images/fish-icons/lenok.webp",
@@ -68,5 +68,10 @@
     "src": "/images/fish-icons/yellowcheek.webp",
     "width": 640,
     "height": 320
+  },
+  "steelhead": {
+    "src": "/images/fish-icons/steelhead.webp",
+    "width": 640,
+    "height": 427
   }
 }

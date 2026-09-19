@@ -1,8 +1,8 @@
-# 红眼鳟图标
+# 赤眼鳟图标
 
 Final generated with the built-in imagegen tool, 2026-09-17, after Zeo rejected the short/deep first draft. Asset: `public/images/fish-icons/redeye.webp`, 640×427 with alpha. User catch photographs are separate, not synthetic.
 
-Primary anatomy reference: [live Aqua Toto aquarium photograph, Squaliobarbus curriculus](https://remoteregion.hateblo.jp/entry/2018/05/19/230455). The source photograph is for reference only and not published with the website. Supporting anatomy/color references: user-supplied IMG_5082 and IMG_5103. Display name corrected to 红眼鳟 per user, a documented common name for 赤眼鳟.
+Primary anatomy reference: [live Aqua Toto aquarium photograph, Squaliobarbus curriculus](https://remoteregion.hateblo.jp/entry/2018/05/19/230455). The source photograph is for reference only and not published with the website. Supporting anatomy/color references: user-supplied IMG_5082 and IMG_5103. The website uses the standard Chinese name 赤眼鳟; 红眼鳟 is retained here only as a documented common name.
 
 ## Prompt
 
@@ -16,4 +16,4 @@ Keep **Barbel chub** for *Squaliobarbus curriculus*. This is an established comm
 - [NCBI Taxonomy, taxon 75372](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=75372): GenBank common name “barbel chub”.
 - [Chromosome-level genome assembly and annotation of Barbel chub Squaliobarbus curriculus, Scientific Data](https://doi.org/10.1038/s41597-024-04354-1): primary research uses the same English and scientific names.
 
-The provided photograph's red-orange upper eye and elongated body are consistent with this identification; this visual check is not a formal specimen identification. Chinese display name remains 红眼鳟 as requested.
+The provided photograph's red-orange upper eye and elongated body are consistent with this identification; this visual check is not a formal specimen identification. Chinese display name is 赤眼鳟.

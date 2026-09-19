@@ -33,12 +33,13 @@
 | 香鱼 | Ayu sweetfish | Plecoglossus altivelis | [FishBase 物种页](https://www.fishbase.se/summary/251) 列明 Ayu sweetfish。 |
 | 青竹鲤 | Spinibarbus denticulatus | Spinibarbus denticulatus | [农业农村部资料](https://yyj.moa.gov.cn/scyz/201904/t20190428_6232059.htm) 将青竹鲤列为倒刺鲃地方名；拉丁属名拼写采用 [FishBase 物种页](https://www.fishbase.se/summary/Spinibarbus_denticulatus.html)，不沿用旧资料中的 Spinibaxbus 排印错误。缺少充分支持的主英文俗名，采用学名。 |
 | 鱤鱼 | Yellowcheek | Elopichthys bambusa | [FishBase 物种页](https://www.fishbase.se/summary/Elopichthys_bambusa.html) 将鱤对应到该学名，并收录 Yellowcheek 为英文名。 |
+| 钢头鳟 | Steelhead | Oncorhynchus mykiss（降海型） | Steelhead 是降海型虹鳟通名；网站使用钓鱼语境中最直接、通行的英文名 Steelhead。 |
 
 青竹鲤作为独立心愿，与已解锁中华倒刺鲃（Spinibarbus sinensis）分开，不使用同一图标。上述新增鱼种只加入心愿单，均标为未解锁，不生成日期、地点或鱼获照片，也不增加解锁计数。保留原有大个体白甲鱼目标。
 
-## 2026-09-17 红眼鳟新增
+## 2026-09-17 赤眼鳟新增，2026-09-19 名称调整
 
 红眼鳟（赤眼鳟的俗称） → **Barbel chub** → *Squaliobarbus curriculus*。
 [FishBase](https://www.fishbase.org/summary/10387) 列英文名；[台湾鱼类资料库标本页](https://fishdb.sinica.edu.tw/mobi/specimendetail.php?id=NTUM02219) 支持中文名与学名对应。用户确认已解锁、日期2026-08-15、地点重庆；照片由用户提供。
 
-用户随后纠正网站显示名称为“红眼鳟”。[农业部公报](https://www.moa.gov.cn/nybgb/2014/shiyi/201712/P020221107732921620727.pdf) 将红眼鳟列为赤眼鳟俗称，对应同一学名；保留 Barbel chub 译名。首次图标体形偏短高背，已按活体与用户实物参照重绘，不采用首版。
+网站中文显示名称最终采用“赤眼鳟”。[农业部公报](https://www.moa.gov.cn/nybgb/2014/shiyi/201712/P020221107732921620727.pdf) 将红眼鳟列为赤眼鳟俗称，对应同一学名；保留 Barbel chub 英文名。首次图标体形偏短高背，已按活体与用户实物参照重绘，不采用首版。
