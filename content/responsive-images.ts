@@ -88,8 +88,8 @@ import asset85 from '../assets/journal/fish-icons-ayu-320.74a0832656f1.webp?url'
 import asset86 from '../assets/journal/fish-icons-ayu-640.737b7b47c9d4.webp?url';
 import asset87 from '../assets/journal/fish-icons-bamboo-320.9b100e9e340f.webp?url';
 import asset88 from '../assets/journal/fish-icons-bamboo-640.6bfd40f0f3b0.webp?url';
-import asset89 from '../assets/journal/fish-icons-barbel-320.f51f4d6fc455.webp?url';
-import asset90 from '../assets/journal/fish-icons-barbel-640.d61d42c722f4.webp?url';
+import asset89 from '../assets/journal/fish-icons-barbel-320.ea86b2918350.webp?url';
+import asset90 from '../assets/journal/fish-icons-barbel-640.ba7853ebfa18.webp?url';
 import asset91 from '../assets/journal/fish-icons-char-320.bf547ed4f8ef.webp?url';
 import asset92 from '../assets/journal/fish-icons-char-640.23ee13c6c49b.webp?url';
 import asset93 from '../assets/journal/fish-icons-grayling-320.5a2b28c71a59.webp?url';
