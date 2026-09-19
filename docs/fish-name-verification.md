@@ -32,8 +32,9 @@
 | GT | Giant trevally | Caranx ignobilis | [FishBase 物种页](https://www.fishbase.se/summary/Caranx-ignobilis.html)；GT 按钓鱼语境的 Giant trevally 解释。 |
 | 香鱼 | Ayu sweetfish | Plecoglossus altivelis | [FishBase 物种页](https://www.fishbase.se/summary/251) 列明 Ayu sweetfish。 |
 | 青竹鲤 | Spinibarbus denticulatus | Spinibarbus denticulatus | [农业农村部资料](https://yyj.moa.gov.cn/scyz/201904/t20190428_6232059.htm) 将青竹鲤列为倒刺鲃地方名；拉丁属名拼写采用 [FishBase 物种页](https://www.fishbase.se/summary/Spinibarbus_denticulatus.html)，不沿用旧资料中的 Spinibaxbus 排印错误。缺少充分支持的主英文俗名，采用学名。 |
+| 鱤鱼 | Yellowcheek | Elopichthys bambusa | [FishBase 物种页](https://www.fishbase.se/summary/Elopichthys_bambusa.html) 将鱤对应到该学名，并收录 Yellowcheek 为英文名。 |
 
-青竹鲤作为独立心愿，与已解锁中华倒刺鲃（Spinibarbus sinensis）分开，不使用同一图标。三项仅加入心愿单，均标为未解锁，不生成日期、地点或鱼获照片，也不增加解锁计数。保留原有大个体白甲鱼目标。
+青竹鲤作为独立心愿，与已解锁中华倒刺鲃（Spinibarbus sinensis）分开，不使用同一图标。上述新增鱼种只加入心愿单，均标为未解锁，不生成日期、地点或鱼获照片，也不增加解锁计数。保留原有大个体白甲鱼目标。
 
 ## 2026-09-17 红眼鳟新增
 

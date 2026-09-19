@@ -63,5 +63,10 @@
     "src": "/images/fish-icons/redeye.webp",
     "width": 640,
     "height": 427
+  },
+  "yellowcheek": {
+    "src": "/images/fish-icons/yellowcheek.webp",
+    "width": 640,
+    "height": 320
   }
 }

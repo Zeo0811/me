@@ -114,13 +114,15 @@ import asset111 from '../assets/journal/fish-icons-schizothorax-320.e2b97f589d87
 import asset112 from '../assets/journal/fish-icons-schizothorax-640.d30ac279c3c4.webp?url';
 import asset113 from '../assets/journal/fish-icons-whitearmor-320.2fca021e2039.webp?url';
 import asset114 from '../assets/journal/fish-icons-whitearmor-640.e9ddbfbf963a.webp?url';
-import asset115 from '../assets/journal/simulator-640.2b545a22e8bf.webp?url';
-import asset116 from '../assets/journal/simulator-1024.212d19201c9a.webp?url';
-import asset117 from '../assets/journal/simulator-1536.408be148eaf6.webp?url';
-import asset118 from '../assets/journal/reflection-terrain.c466a41e1c42.webp?url';
-import asset119 from '../assets/journal/reflection-day-terrain.90ac8f0e7f99.webp?url';
-import asset120 from '../assets/journal/reflection-dawn-terrain.d9cf1a5390ba.webp?url';
-import asset121 from '../assets/journal/reflection-night-terrain.3cedcd9139e4.webp?url';
+import asset115 from '../assets/journal/fish-icons-yellowcheek-320.be7c063f64e9.webp?url';
+import asset116 from '../assets/journal/fish-icons-yellowcheek-640.54111e950b65.webp?url';
+import asset117 from '../assets/journal/simulator-640.2b545a22e8bf.webp?url';
+import asset118 from '../assets/journal/simulator-1024.212d19201c9a.webp?url';
+import asset119 from '../assets/journal/simulator-1536.408be148eaf6.webp?url';
+import asset120 from '../assets/journal/reflection-terrain.c466a41e1c42.webp?url';
+import asset121 from '../assets/journal/reflection-day-terrain.90ac8f0e7f99.webp?url';
+import asset122 from '../assets/journal/reflection-dawn-terrain.d9cf1a5390ba.webp?url';
+import asset123 from '../assets/journal/reflection-night-terrain.3cedcd9139e4.webp?url';
 const images = {
   "/images/about/catch-closeup.webp": {
     "width": 1600,
@@ -864,21 +866,35 @@ const images = {
       }
     ]
   },
+  "/images/fish-icons/yellowcheek.webp": {
+    "width": 640,
+    "height": 320,
+    "variants": [
+      {
+        "width": 320,
+        "src": asset115
+      },
+      {
+        "width": 640,
+        "src": asset116
+      }
+    ]
+  },
   "/images/river-studio-entry.webp": {
     "width": 1536,
     "height": 1024,
     "variants": [
       {
         "width": 640,
-        "src": asset115
+        "src": asset117
       },
       {
         "width": 1024,
-        "src": asset116
+        "src": asset118
       },
       {
         "width": 1536,
-        "src": asset117
+        "src": asset119
       }
     ]
   },
@@ -888,7 +904,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset118
+        "src": asset120
       }
     ]
   },
@@ -898,7 +914,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset119
+        "src": asset121
       }
     ]
   },
@@ -908,7 +924,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset120
+        "src": asset122
       }
     ]
   },
@@ -918,7 +934,7 @@ const images = {
     "variants": [
       {
         "width": 1536,
-        "src": asset121
+        "src": asset123
       }
     ]
   }

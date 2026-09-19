@@ -15,6 +15,7 @@ export const englishFishNames: Record<string, string> = {
   gt: 'Giant trevally',
   ayu: 'Ayu sweetfish',
   bamboo: 'Spinibarbus denticulatus',
+  yellowcheek: 'Yellowcheek',
 };
 const translations: Record<
   string,
