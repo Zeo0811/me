@@ -88,10 +88,10 @@ import asset85 from '../assets/journal/fish-icons-ayu-320.74a0832656f1.webp?url'
 import asset86 from '../assets/journal/fish-icons-ayu-640.737b7b47c9d4.webp?url';
 import asset87 from '../assets/journal/fish-icons-bamboo-320.9b100e9e340f.webp?url';
 import asset88 from '../assets/journal/fish-icons-bamboo-640.6bfd40f0f3b0.webp?url';
-import asset89 from '../assets/journal/fish-icons-barbel-320.464eebbe7884.webp?url';
-import asset90 from '../assets/journal/fish-icons-barbel-640.dfe53ddb764c.webp?url';
-import asset91 from '../assets/journal/fish-icons-char-320.dc02f38c8e66.webp?url';
-import asset92 from '../assets/journal/fish-icons-char-640.33d5b1ca5b26.webp?url';
+import asset89 from '../assets/journal/fish-icons-barbel-320.f51f4d6fc455.webp?url';
+import asset90 from '../assets/journal/fish-icons-barbel-640.d61d42c722f4.webp?url';
+import asset91 from '../assets/journal/fish-icons-char-320.bf547ed4f8ef.webp?url';
+import asset92 from '../assets/journal/fish-icons-char-640.23ee13c6c49b.webp?url';
 import asset93 from '../assets/journal/fish-icons-grayling-320.5a2b28c71a59.webp?url';
 import asset94 from '../assets/journal/fish-icons-grayling-640.cc6ee813a4c5.webp?url';
 import asset95 from '../assets/journal/fish-icons-gt-320.ff8f1c695f2b.webp?url';
@@ -702,7 +702,7 @@ const images = {
   },
   "/images/fish-icons/char.webp": {
     "width": 640,
-    "height": 640,
+    "height": 427,
     "variants": [
       {
         "width": 320,

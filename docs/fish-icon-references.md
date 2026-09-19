@@ -23,6 +23,8 @@ whitearmor / barbel / lenok 的原图包含较宽半透明软光晕，alpha 最�
 
 ## char — 白斑红点鲑 Salvelinus leucomaenis
 
+2026-09-19 重绘：以用户实际鱼获 `char-0855.webp` 为主参照，并对照 FishBase、俄罗斯科学院远东海洋生物研究所标本、公开水族馆活体照片。新版收窄并拉长身体和尾柄，减少均匀装饰性斑点，恢复楔形头、大口、脂鳍，以及下鳍浅色前缘。
+
 细鳞、白色小圆斑、橄榄灰背、浅腹、脂鳍；白斑与细鳞鲑的暗斑区别。
 
 - 来源页：https://tonysharks.com/Tree_of_life/Eukaryote/Opisthokonta/Nikkoiwana/Nikkoiwana.html
@@ -70,6 +72,8 @@ Use case: scientific-educational. Asset type: individual realistic miniature 3D 
 ```
 
 ## barbel — 中华倒刺鲃 Spinibarbus sinensis
+
+2026-09-19 重绘：核对 FishBase/CAFS、iNaturalist 及明确标注 *Spinibarbus sinensis* 的水族箱与钓获侧面照片，并结合用户 `qingbo.webp` 实物。新版采用小型钝锥头、收紧的亚下位马蹄形口、贴口短须、平卧于背鳍起点前的倒刺，以及青黑背部和大鳞黑边；避免画成普通鲤鱼或青竹鲤。
 
 大而黑缘的鳞片、两对须、背鳍基部向前的小倒刺、较健壮体形、灰黑鳍；不可混成 S. denticulatus / S. hollandi。
 
